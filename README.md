@@ -8,4 +8,8 @@
 
 ZSH plugin to enable using `fzf` to search command history and for files.
 
-This will automagically install `fzf` into your home directory if it isn't already there, and bind `^R` to an `fzf`-powered search of your command history. Used by the [zsh-quickstart-kit](https://github.com/unixorn/zsh-quickstart-kit) to make the default setup have a more 'batteries included' feel.
+This will automagically install `fzf` into your home directory if it isn't already there, and bind `^R` to an `fzf`-powered search of your command history.
+
+Used by the [zsh-quickstart-kit](https://github.com/unixorn/zsh-quickstart-kit) to make the default setup have a more 'batteries included' feel.
+
+Yes, there is a plugin baked into oh-my-zsh, this allows easy `fzf` integration for other frameworks.
