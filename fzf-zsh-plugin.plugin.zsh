@@ -35,3 +35,7 @@ export FZF_CTRL_T_COMMAND="${FZF_DEFAULT_COMMAND}"
 if type 'fd' > /dev/null; then
   export FZF_DEFAULT_COMMAND='fd --type f'
 fi
+
+if [[ -d ~/.fzf/man ]]; then
+  export MANPATH="$MANPATH:/~.fzf/man"
+fi
