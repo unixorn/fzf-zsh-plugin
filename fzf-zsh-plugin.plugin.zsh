@@ -37,5 +37,5 @@ if type 'fd' > /dev/null; then
 fi
 
 if [[ -d ~/.fzf/man ]]; then
-  export MANPATH="$MANPATH:/~.fzf/man"
+  export MANPATH="$MANPATH:~/.fzf/man"
 fi
