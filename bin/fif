@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+#
+# fif
+#
+# Source - https://betterprogramming.pub/boost-your-command-line-productivity-with-fuzzy-finder-985aa162ba5d
+
+set -o pipefail
+if [[ -n "$DEBUG" ]]; then
+  set -x
+fi
+
+fif() {
+  if [ ! "$#" -gt 0 ]; then
+    echo "Need a string to search for!";
+    return 1;
+  fi
+  rg --files-with-matches --no-messages "$1" | fzf $FZF_PREVIEW_WINDOW --preview "rg --ignore-case --pretty --context 10 '$1' {}"
+}
+
+command -v rg >/dev/null
+if [[ $? -eq 0 ]]; then
+  fif $@
+else
+  echo "Can't find ripgrep (rg). Please install it"
+  exit 1
+fi
