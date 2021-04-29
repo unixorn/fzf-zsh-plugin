@@ -19,7 +19,8 @@ git-fzf-reflog-browser() {
           --preview "git show --color=always {1}"
     )
   if [[ -n "$selection" ]]; then
-    git show $(echo $selection | cut -d' ' -f1)
+    # shellcheck disable=SC2086
+    git show "$(echo $selection | cut -d' ' -f1)"
   fi
 }
 # shellcheck disable=SC2068

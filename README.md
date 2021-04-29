@@ -6,7 +6,7 @@
 [![Issue Count](https://codeclimate.com/github/unixorn/fzf-zsh-plugin/badges/issue_count.svg)](https://codeclimate.com/github/unixorn/fzf-zsh-plugin)
 [![GitHub stars](https://img.shields.io/github/stars/unixorn/fzf-zsh-plugin.svg)](https://github.com/unixorn/fzf-zsh-plugin/stargazers)
 
-ZSH plugin to enable using `fzf` to search command history and for files.
+ZSH plugin to enable using [fzf](https://github.com/junegunn/fzf) to search command history and for files.
 
 This will automagically install `fzf` into your home directory if it isn't already there, and bind `^R` to an `fzf`-powered search of your command history.
 
