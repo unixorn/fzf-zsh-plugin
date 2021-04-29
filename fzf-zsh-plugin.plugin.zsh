@@ -58,6 +58,22 @@ if has 'fd'; then
 
 fi
 
+if has tree; then
+  fzf-change-directory() {
+    local directory=$(
+      fd --type d | \
+      fzf --query="$1" --no-multi --select-1 --exit-0 \
+        --preview 'tree -C {} | head -100'
+      )
+    if [[ -n "$directory" ]]; then
+      cd "$directory"
+    fi
+  }
+  alias fcd=fzf-change-directory
+fi
+
+alias fkill='fzf-kill'
+
 if [[ -d ~/.fzf/man ]]; then
   export MANPATH="$MANPATH:~/.fzf/man"
 fi
