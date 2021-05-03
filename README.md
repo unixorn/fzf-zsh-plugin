@@ -12,4 +12,10 @@ This will automagically install `fzf` into your home directory if it isn't alrea
 
 Used by the [zsh-quickstart-kit](https://github.com/unixorn/zsh-quickstart-kit) to make the default setup have a more 'batteries included' feel.
 
-Yes, there is a plugin baked into oh-my-zsh, this allows easy `fzf` integration for other frameworks.
+Yes, there is a plugin baked into oh-my-zsh, this allows easy `fzf` integration for other frameworks, and adds some helper scripts.
+
+## Contents
+| Name | Description | Author |
+| ---- | ----------- | ------ |
+| fif | Uses `fzf` and `rg` to find a term in files | [Boost Your Command Line Productivity With Fuzzy Finder](https://betterprogramming.pub/boost-your-command-line-productivity-with-fuzzy-finder-985aa162ba5d)
+ |
