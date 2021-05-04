@@ -15,7 +15,7 @@ fail() {
 # Functions from https://bluz71.github.io/2018/11/26/fuzzy-finding-in-bash-with-fzf.html
 if has bat; then
   fzf-find-edit() {
-    local file=$(
+    file=$(
       fzf --query="$1" --no-multi --select-1 --exit-0 \
         --preview 'bat --color=always --line-range :500 {}'
       )
@@ -26,7 +26,7 @@ if has bat; then
 else
   # No bat installed, so use head
   fzf-find-edit() {
-    local file=$(
+    file=$(
       fzf --query="$1" --no-multi --select-1 --exit-0 \
         --preview 'head -100 {}'
       )
