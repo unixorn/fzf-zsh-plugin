@@ -14,11 +14,13 @@ fif() {
     echo "Need a string to search for!";
     return 1;
   fi
-  rg --files-with-matches --no-messages "$1" | fzf $FZF_PREVIEW_WINDOW --preview "rg --ignore-case --pretty --context 10 '$1' {}"
+  rg --files-with-matches --no-messages "$1" | fzf "$FZF_PREVIEW_WINDOW" --preview "rg --ignore-case --pretty --context 10 '$1' {}"
 }
 
 command -v rg >/dev/null
+# shellcheck disable=SC2181
 if [[ $? -eq 0 ]]; then
+  # shellcheck disable=SC2068
   fif $@
 else
   echo "Can't find ripgrep (rg). Please install it"

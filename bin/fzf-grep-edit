@@ -22,13 +22,14 @@ if has bat; then
       echo 'Error: search term was not provided.'
       return
     fi
-    local match=$(
+    match=$(
       rg --color=never --line-number "$1" |
         fzf --no-multi --delimiter : \
           --preview "bat --color=always --line-range {2}: {1}"
       )
-    local file=$(echo "$match" | cut -d':' -f1)
+    file=$(echo "$match" | cut -d':' -f1)
     if [[ -n $file ]]; then
+    # shellcheck disable=SC2046
       $EDITOR "$file" +$(echo "$match" | cut -d':' -f2)
     fi
   }
@@ -38,13 +39,14 @@ else
       echo 'Error: search term was not provided.'
       return
     fi
-    local match=$(
+    match=$(
       rg --color=never --line-number "$1" |
         fzf --no-multi --delimiter : \
           --preview "head -100 {2}: {1}"
       )
-    local file=$(echo "$match" | cut -d':' -f1)
+    file=$(echo "$match" | cut -d':' -f1)
     if [[ -n $file ]]; then
+    # shellcheck disable=SC2046
       $EDITOR "$file" +$(echo "$match" | cut -d':' -f2)
     fi
   }
