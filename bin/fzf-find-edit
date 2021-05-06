@@ -12,6 +12,10 @@ fail() {
   exit "${2-1}"  ## Return a code specified by $2 or 1 by default.
 }
 
+has() {
+  which "$@" > /dev/null 2>&1
+}
+
 # Functions from https://bluz71.github.io/2018/11/26/fuzzy-finding-in-bash-with-fzf.html
 if has bat; then
   fzf-find-edit() {
