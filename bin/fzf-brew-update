@@ -25,8 +25,11 @@ brew-update-plugin() {
   upd=$(brew leaves | fzf -m)
 
   if [[ $upd ]]; then
-    for prog in $(echo $upd);
-    do; brew upgrade $prog; done;
+    # shellcheck disable=SC2086
+    for prog in $upd
+    do
+      brew upgrade $prog
+    done
   fi
 }
 
