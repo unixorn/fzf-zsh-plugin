@@ -2,7 +2,7 @@
 #
 # Select a docker container to start and attach to
 #
-# From fzf wiki
+# From fzf wiki: https://github.com/junegunn/fzf/wiki/examples
 
 set -o pipefail
 if [[ -n "$DEBUG" ]]; then

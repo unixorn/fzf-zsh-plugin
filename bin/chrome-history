@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+#
+# browse Chrome history, then open 
+
+set -o pipefail
+if [[ -n "$DEBUG" ]]; then
+  set -x
+fi
+
+function debug() {
+  if [[ -n "$DEBUG" ]]; then
+    echo "$@"
+  fi
+}
+
+function fail() {
+  printf '%s\n' "$1" >&2  ## Send message to stderr. Exclude >&2 if you don't want it that way.
+  exit "${2-1}"  ## Return a code specified by $2 or 1 by default.
+}
+
+function has() {
+  # Check if a command is in $PATH
+  which "$@" > /dev/null 2>&1
+}
+
+# browse Chrome history
+chrome-history() {
+  local cols sep chrome_history open
+  cols=$(( COLUMNS / 3 ))
+  sep='{::}'
+
+  cp -f "$chrome_history" /tmp/h
+  sqlite3 -separator $sep /tmp/h \
+    "select substr(title, 1, $cols), url
+     from urls order by last_visit_time desc" |
+  awk -F $sep '{printf "%-'$cols's  \x1b[36m%s\x1b[m\n", $1, $2}' |
+  fzf --ansi --multi | sed 's#.*\(https*://\)#\1#' | xargs "$open" > /dev/null 2> /dev/null
+}
+
+if [ "$(uname)" = "Darwin" ]; then
+  chrome_history="$HOME/Library/Application Support/Google/Chrome/Default/History"
+  open=open
+else
+  chrome_history="$HOME/.config/google-chrome/Default/History"
+  open=xdg-open
+fi
+
+if [[ -r "$chrome_history" ]]; then
+  chrome-history "$@"
+else
+  fail "Can't read $chrome_history"
+fi

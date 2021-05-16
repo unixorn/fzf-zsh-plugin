@@ -2,7 +2,7 @@
 #
 # Select a docker container to remove
 #
-# From fzf wiki: https://github.com/junegunn/fzf/wiki/examples
+# From fzf wiki
 
 set -o pipefail
 if [[ -n "$DEBUG" ]]; then
@@ -25,12 +25,16 @@ function has() {
   which "$@" > /dev/null 2>&1
 }
 
-function drm() {
-  docker ps -a | sed 1d | fzf -q "$1" --no-sort -m --tac | awk '{ print $1 }' | xargs -r docker rm
+# Select a running docker container to stop
+function d-stop-container() {
+  local cid
+  cid=$(docker ps | sed 1d | fzf -q "$1" | awk '{print $1}')
+
+  [ -n "$cid" ] && docker stop "$cid"
 }
 
 if has docker; then
-  drm "$@"
+  d-stop-container "$@"
 else
   "Cannot find docker in $PATH"
 fi

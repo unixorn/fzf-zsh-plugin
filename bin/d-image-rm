@@ -2,7 +2,7 @@
 #
 # Select a docker image or images to remove
 #
-# From fzf wiki
+# From fzf wiki: https://github.com/junegunn/fzf/wiki/examples
 
 set -o pipefail
 if [[ -n "$DEBUG" ]]; then
