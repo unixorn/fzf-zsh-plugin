@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+#
+# List all vagrant boxes available in the system including its status, and try to access the selected one via ssh
+#
+# From the fzf wiki - https://github.com/junegunn/fzf/wiki/examples
+
+
+set -o pipefail
+if [[ -n "$DEBUG" ]]; then
+  set -x
+fi
+
+function debug() {
+  if [[ -n "$DEBUG" ]]; then
+    echo "$@"
+  fi
+}
+
+function fail() {
+  printf '%s\n' "$1" >&2  ## Send message to stderr. Exclude >&2 if you don't want it that way.
+  exit "${2-1}"  ## Return a code specified by $2 or 1 by default.
+}
+
+function has() {
+  # Check if a command is in $PATH
+  which "$@" > /dev/null 2>&1
+}
+
+vagrant-search(){
+  #List all vagrant boxes available in the system including its status, and try to access the selected one via ssh
+  # shellcheck disable=SC2164,SC2046,SC2002
+  cd $(cat "$machine_index" | jq '.machines[] | {name, vagrantfile_path, state}' | jq '.name + "," + .state  + "," + .vagrantfile_path'| sed 's/^"\(.*\)"$/\1/'| column -s, -t | sort -rk 2 | fzf | awk '{print $3}'); exec vagrant ssh
+}
+
+machine_index=~/.vagrant.d/data/machine-index/index
+
+if ! has jq; then
+  fail "Can't find jq in $PATH"
+fi
+if ! has vagrant; then
+  fail "Can't find vagrant in $PATH"
+fi
+if [[ ! -r "$machine_index" ]]; then
+  fail "Can't read $machine_index"
+fi
+
+vagrant-search "$@"
