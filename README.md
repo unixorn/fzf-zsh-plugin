@@ -6,13 +6,28 @@
 [![Issue Count](https://codeclimate.com/github/unixorn/fzf-zsh-plugin/badges/issue_count.svg)](https://codeclimate.com/github/unixorn/fzf-zsh-plugin)
 [![GitHub stars](https://img.shields.io/github/stars/unixorn/fzf-zsh-plugin.svg)](https://github.com/unixorn/fzf-zsh-plugin/stargazers)
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+## Table of Contents
+
+- [Contents](#contents)
+- [Installing](#installing)
+  - [Zgenom](#zgenom)
+  - [Antigen](#antigen)
+  - [Oh-My-Zsh](#oh-my-zsh)
+  - [Without using a framework](#without-using-a-framework)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ZSH plugin to enable using [fzf](https://github.com/junegunn/fzf) to search command history and for files.
 
 This will automagically install `fzf` into your home directory if it isn't already there, and bind `^R` to an `fzf`-powered search of your command history.
 
 Used by the [zsh-quickstart-kit](https://github.com/unixorn/zsh-quickstart-kit) to make the default setup have a more 'batteries included' feel.
 
-Yes, there is a plugin baked into oh-my-zsh, this allows easy `fzf` integration for other frameworks, and adds some helper scripts.
+Yes, there is a plugin baked into [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh), this allows easy `fzf` integration for other frameworks and shells, and adds some helper scripts.
+
+Note - yes, these scripts could all be ZSH functions instead of scripts in the `bin` directory. We prefer to use standalone scripts so that non-ZSH users can also use the repository by adding its `bin` directory to their `$PATH`.
 
 ## Contents
 
@@ -34,3 +49,26 @@ Yes, there is a plugin baked into oh-my-zsh, this allows easy `fzf` integration 
 | `tm` | Uses `fzf` to search for a `tmux` session or create one if no matches. | From the [fzf wiki](https://github.com/junegunn/fzf/wiki/examples) |
 | `tmux-search` | Uses `fzf` to select a `tmux` session. Skips `fzf` if there's only one match, exits if no match. | From the [fzf wiki](https://github.com/junegunn/fzf/wiki/examples) |
 | `vagrant-box-search` | Uses `fzf` to select a `vagrant` box and connect to it with `ssh`. | From the [fzf wiki](https://github.com/junegunn/fzf/wiki/examples) |
+
+## Installing
+
+### Zgenom
+
+add `zgenom load unixorn/fzf-zsh-plugin` to your `.zshrc` with your other load commands.
+
+### Antigen
+
+add `antigen bundle unixorn/fzf-zsh-plugin` to your `.zshrc`
+
+### [Oh-My-Zsh](http://ohmyz.sh/)
+
+1. `cd ~/.oh-my-zsh/custom/plugins`
+2. `git clone git@github.com:unixorn/fzf-zsh-plugin.git fzf-zsh`
+3. Add tumult to your plugin list - edit `~.zshrc` and change `plugins=(...)` to `plugins=(... fzf-zsh)`
+
+### Without using a framework
+
+1. git clone this repository, then add its bin directory to your `$PATH`.
+2. Add `source /path/to/repository/checkout/fzf-zsh-plugin.plugin.zsh` to your `.zshrc` file.
+
+The scripts in this collection don't actually require you to be using ZSH as your login shell, they're being distributed as an [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh)-compatible plugin because it's convenient for me.
