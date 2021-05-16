@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+#
+# Chrome Bookmarks browser with jq for OS X
+
+set -o pipefail
+if [[ -n "$DEBUG" ]]; then
+  set -x
+fi
+
+function debug() {
+  if [[ -n "$DEBUG" ]]; then
+    echo "$@"
+  fi
+}
+
+function fail() {
+  printf '%s\n' "$1" >&2  ## Send message to stderr. Exclude >&2 if you don't want it that way.
+  exit "${2-1}"  ## Return a code specified by $2 or 1 by default.
+}
+
+function has() {
+  # Check if a command is in $PATH
+  which "$@" > /dev/null 2>&1
+}
+
+# b - browse chrome bookmarks
+b() {
+
+     jq_script='
+        def ancestors: while(. | length >= 2; del(.[-1,-2]));
+        . as $in | paths(.url?) as $key | $in | getpath($key) | {name,url, path: [$key[0:-2] | ancestors as $a | $in | getpath($a) | .name?] | reverse | join("/") } | .path + "/" + .name + "\t" + .url'
+
+    jq -r "$jq_script" < "$bookmarks_path" \
+        | sed -E $'s/(.*)\t(.*)/\\1\t\x1b[36m\\2\x1b[m/g' \
+        | fzf --ansi \
+        | cut -d$'\t' -f2 \
+        | xargs open
+}
+
+bookmarks_path=~/Library/Application\ Support/Google/Chrome/Default/Bookmarks
+if [[ ! -r "$bookmarks_path" ]]; then
+  fail "Can't read $bookmarks_path"
+fi
+
+myname=$(basename $0)
+if ! has fzf; then
+  fail "$myname requires fzf and can't find it in $PATH"
+fi
+if ! has jq; then
+  fail "$myname requires jq and can't find it in $PATH"
+fi
+
+b "$@"
