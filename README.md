@@ -15,6 +15,7 @@ Used by the [zsh-quickstart-kit](https://github.com/unixorn/zsh-quickstart-kit) 
 Yes, there is a plugin baked into oh-my-zsh, this allows easy `fzf` integration for other frameworks, and adds some helper scripts.
 
 ## Contents
+
 | Name | Description | Author |
 | ---- | ----------- | ------ |
 | `fif` | Uses `fzf` and `rg` to find a term in files | [Boost Your Command Line Productivity With Fuzzy Finder](https://betterprogramming.pub/boost-your-command-line-productivity-with-fuzzy-finder-985aa162ba5d) |
@@ -26,3 +27,4 @@ Yes, there is a plugin baked into oh-my-zsh, this allows easy `fzf` integration 
 | `fzf-find-edit` | Uses `fzf` to select files (displaying previews) to edit with `$EDITOR` | [Boost Your Command Line Productivity With Fuzzy Finder](https://betterprogramming.pub/boost-your-command-line-productivity-with-fuzzy-finder-985aa162ba5d) |
 | `fzf-grep-edit` | Uses `fzf` to select files (displaying previews) that contain a search term to edit with `$EDITOR` | [Boost Your Command Line Productivity With Fuzzy Finder](https://betterprogramming.pub/boost-your-command-line-productivity-with-fuzzy-finder-985aa162ba5d) |
 | `fzf-kill` | Uses `fzf` to select processes to kill | [Boost Your Command Line Productivity With Fuzzy Finder](https://betterprogramming.pub/boost-your-command-line-productivity-with-fuzzy-finder-985aa162ba5d) |
+| `tm` | Uses `fzf` to search for a `tmux` session or create one if no matches. | From the [fzf wiki](https://github.com/junegunn/fzf/wiki/examples) |
