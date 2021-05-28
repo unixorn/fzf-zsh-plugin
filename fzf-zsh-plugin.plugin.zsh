@@ -17,6 +17,10 @@ local FZF_PLUGIN_BIN="$(dirname $0)/bin"
 export PATH="${PATH}:${FZF_PLUGIN_BIN}"
 unset FZF_PLUGIN_BIN
 
+local FZF_COMPLETIONS_D="$(dirname $0)/completions"
+export fpath=($FZF_COMPLETIONS_D "${fpath[@]}" )
+unset FZF_COMPLETIONS_D
+
 function has() {
   which "$@" > /dev/null 2>&1
 }
