@@ -66,7 +66,7 @@ if has 'fd'; then
 fi
 
 if has tree; then
-  fzf-change-directory() {
+  function fzf-change-directory() {
     local directory=$(
       fd --type d | \
       fzf --query="$1" --no-multi --select-1 --exit-0 \
@@ -96,7 +96,7 @@ fi
 
 # From fzf wiki
 # cdf - cd into the directory of the selected file
-cdf() {
+function cdf() {
   local file
   local dir
   file=$(fzf +m -q "$1") && dir=$(dirname "$file") && cd "$dir"
