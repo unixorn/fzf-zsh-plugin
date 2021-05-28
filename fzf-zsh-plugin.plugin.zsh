@@ -12,9 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Add our plugin's bin diretory to user's path
-PLUGIN_BIN="$(dirname $0)/bin"
-export PATH="${PATH}:${PLUGIN_BIN}"
+# Add our plugin's bin diretory to the user's path
+local FZF_PLUGIN_BIN="$(dirname $0)/bin"
+export PATH="${PATH}:${FZF_PLUGIN_BIN}"
+unset FZF_PLUGIN_BIN
+
+local FZF_COMPLETIONS_D="$(dirname $0)/completions"
+export fpath=($FZF_COMPLETIONS_D "${fpath[@]}" )
+unset FZF_COMPLETIONS_D
 
 function has() {
   which "$@" > /dev/null 2>&1
@@ -61,7 +66,7 @@ if has 'fd'; then
 fi
 
 if has tree; then
-  fzf-change-directory() {
+  function fzf-change-directory() {
     local directory=$(
       fd --type d | \
       fzf --query="$1" --no-multi --select-1 --exit-0 \
@@ -83,7 +88,7 @@ fi
 if has z; then
   unalias z 2> /dev/null
   # like normal z when used with arguments but displays an fzf prompt when used without.
-  z() {
+  function z() {
     [ $# -gt 0 ] && _z "$*" && return
     cd "$(_z -l 2>&1 | fzf --height 40% --nth 2.. --reverse --inline-info +s --tac --query "${*##-* }" | sed 's/^[0-9,.]* *//')"
   }
@@ -91,7 +96,7 @@ fi
 
 # From fzf wiki
 # cdf - cd into the directory of the selected file
-cdf() {
+function cdf() {
   local file
   local dir
   file=$(fzf +m -q "$1") && dir=$(dirname "$file") && cd "$dir"
