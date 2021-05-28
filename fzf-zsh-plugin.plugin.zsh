@@ -12,9 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Add our plugin's bin diretory to user's path
-PLUGIN_BIN="$(dirname $0)/bin"
-export PATH="${PATH}:${PLUGIN_BIN}"
+# Add our plugin's bin diretory to the user's path
+local FZF_PLUGIN_BIN="$(dirname $0)/bin"
+export PATH="${PATH}:${FZF_PLUGIN_BIN}"
+unset FZF_PLUGIN_BIN
 
 function has() {
   which "$@" > /dev/null 2>&1
