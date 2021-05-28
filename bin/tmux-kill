@@ -1,0 +1,39 @@
+#!/usr/bin/env zsh
+#
+# tmux-kill-session - kills a tmux session that you select via fzf.
+#
+# Source: https://github.com/junegunn/fzf/wiki/examples
+setopt re_match_pcre
+
+set -o pipefail
+if [[ -n "$DEBUG" ]]; then
+  set -x
+fi
+
+function fail() {
+  printf '%s\n' "$1" >&2  ## Send message to stderr. Exclude >&2 if you don't want it that way.
+  exit "${2-1}"  ## Return a code specified by $2 or 1 by default.
+}
+
+function has() {
+  # Check if a command is in $PATH
+  which "$@" > /dev/null 2>&1
+}
+
+tmuxkillf () {
+    local sessions
+    sessions="$(tmux ls|fzf --exit-0 --multi)"  || return $?
+    local i
+    for i in "${(f@)sessions}"
+    do
+        [[ $i =~ '([^:]*):.*' ]] && {
+            echo "Killing $match[1]"
+            tmux kill-session -t "$match[1]"
+        }
+    done
+}
+if has tmux; then
+  tmuxkillf "$@"
+else
+  fail "Can't find tmux in $PATH"
+fi
