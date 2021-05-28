@@ -1,8 +1,9 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 #
 # tmux-kill-session - kills a tmux session that you select via fzf.
 #
 # Source: https://github.com/junegunn/fzf/wiki/examples
+setopt re_match_pcre
 
 set -o pipefail
 if [[ -n "$DEBUG" ]]; then
