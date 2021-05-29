@@ -34,10 +34,13 @@ asdf-install() {
   fi
 
   if [[ $lang ]]; then
-    local versions=$(asdf list-all $lang | fzf --tac --no-sort --multi)
+    local versions
+    versions=$(asdf list-all "$lang" | fzf --tac --no-sort --multi)
     if [[ $versions ]]; then
-      for version in $(echo $versions);
-      do; asdf install $lang $version; done;
+      for version in $versions
+      do
+        asdf install "$lang" "$version"
+      done
     fi
   fi
 }
