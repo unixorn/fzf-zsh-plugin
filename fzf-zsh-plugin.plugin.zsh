@@ -25,6 +25,12 @@ function has() {
   which "$@" > /dev/null 2>&1
 }
 
+function debugOut() {
+  if [[ -n "$DEBUG" ]]; then
+    echo "$@"
+  fi
+}
+
 # Install fzf, and enable it for command line history searching and
 # file searching.
 
@@ -41,15 +47,44 @@ if [[ ! -f ~/.fzf.zsh ]]; then
   cp "$(dirname $0)/fzf-settings.zsh" ~/.fzf.zsh
 fi
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-export FZF_DEFAULT_OPTS='--extended'
-export FZF_CTRL_T_COMMAND="${FZF_DEFAULT_COMMAND}"
+# Source this before we start examining things so we can override the
+# defaults cleanly.
+[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+
+# Reasonable defaults. Exclude .git directory and the node_modules cesspit.
+FZF_DEFAULT_COMMAND='find . -type f ( -path .git -o -path node_modules ) -prune'
+
+if has rg; then
+  # rg is faster than find, so use it instead.
+  export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
+fi
+
+export FZF_DEFAULT_OPTS="--layout=reverse
+--info=inline
+--height=80%
+--multi
+--preview-window=:hidden
+--color='hl:148,hl+:154,pointer:032,marker:010,bg+:237,gutter:008'
+--prompt='∼ ' --pointer='▶' --marker='✓'
+--bind '?:toggle-preview'
+--bind 'ctrl-a:select-all'
+--bind 'ctrl-e:execute(echo {+} | xargs -o vim)'
+--bind 'ctrl-v:execute(code {+})'
+"
+
+if has bat; then
+  # bat will syntax colorize files for you
+  export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --preview '([[ -f {} ]] && (bat --style=numbers --color=always {} || cat {})) || ([[ -d {} ]] && (tree -C {} | less)) || echo {} 2> /dev/null | head -200'"
+fi
+
+if has pbcopy; then
+  # on macOS, make ^Y yank the selection to the system clipboard
+  export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --bind 'ctrl-y:execute-silent(echo {+} | pbcopy)'"
+fi
 
 # If fd command is installed, use it instead of find
-if has 'fd'; then
-  # export FZF_DEFAULT_COMMAND='fd --type f'
-  
+if has 'fd'; then  
   # Show hidden, and exclude .git and the pigsty node_modules files
   export FZF_DEFAULT_COMMAND="fd --hidden --follow --exclude '.git' --exclude 'node_modules'"
   export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
@@ -94,6 +129,8 @@ if has z; then
   }
 fi
 
+export FZF_CTRL_T_COMMAND="${FZF_DEFAULT_COMMAND}"
+
 # From fzf wiki
 # cdf - cd into the directory of the selected file
 function cdf() {
@@ -101,3 +138,7 @@ function cdf() {
   local dir
   file=$(fzf +m -q "$1") && dir=$(dirname "$file") && cd "$dir"
 }
+
+# Cleanup internal functions
+unset -f debugOut
+unset -f has

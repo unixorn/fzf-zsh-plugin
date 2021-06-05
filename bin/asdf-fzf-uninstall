@@ -32,10 +32,13 @@ asdf-remove() {
   fi
 
   if [[ $lang ]]; then
-    local versions=$(asdf list $lang | fzf -m)
+    local versions
+    versions=$(asdf list "$lang" | fzf -m)
     if [[ $versions ]]; then
-      for version in $(echo $versions);
-      do; asdf uninstall $lang $version; done;
+      for version in $versions
+      do
+        asdf uninstall "$lang" "$version"
+      done
     fi
   fi
 }

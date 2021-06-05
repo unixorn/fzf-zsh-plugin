@@ -22,12 +22,15 @@ fi
 
 # Install (one or multiple) selected application(s)
 # using "brew search" as source input
-fzf-brew-install() {
-  inst=$(brew search | fzf -m)
+function fzf-brew-install(){
+  # shellcheck disable=SC2068
+  inst=$(brew search $@ | fzf -m)
 
   if [[ $inst ]]; then
-    for prog in $(echo $inst);
-    do; brew install $prog; done;
+    for prog in $inst
+    do
+      brew install "$prog"
+    done
   fi
 }
 
