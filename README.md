@@ -55,6 +55,8 @@ Note - yes, these scripts could all be ZSH functions instead of scripts in the `
 
 ## Installing
 
+You probably want this plugin to be last in your framework's list of plugins to load. It dynamically generates `$FZF_DEFAULT_OPT` and `$FZF_DEFAULT_COMMAND` based on whether it sees things like `rg` and `bat` in your `$PATH`, so it should come after other plugins have had a chance to extend `$PATH`.
+
 ### Zgenom
 
 add `zgenom load unixorn/fzf-zsh-plugin` to your `.zshrc` with your other load commands.
