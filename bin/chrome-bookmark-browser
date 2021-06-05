@@ -26,7 +26,8 @@ function has() {
 # b - browse chrome bookmarks
 b() {
 
-     jq_script='
+    # shellcheck disable=SC2016
+    jq_script='
         def ancestors: while(. | length >= 2; del(.[-1,-2]));
         . as $in | paths(.url?) as $key | $in | getpath($key) | {name,url, path: [$key[0:-2] | ancestors as $a | $in | getpath($a) | .name?] | reverse | join("/") } | .path + "/" + .name + "\t" + .url'
 
@@ -42,7 +43,7 @@ if [[ ! -r "$bookmarks_path" ]]; then
   fail "Can't read $bookmarks_path"
 fi
 
-myname=$(basename $0)
+myname=$(basename "$0")
 if ! has fzf; then
   fail "$myname requires fzf and can't find it in $PATH"
 fi
