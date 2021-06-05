@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+#
+# Use fzf to filter apt-cache search results
+#
+# From https://www.linuxuprising.com/2021/03/a-quick-introduction-to-fzf-interactive.html
+
+set -o pipefail
+if [[ -n "$DEBUG" ]]; then
+  set -x
+fi
+
+function debug() {
+  if [[ -n "$DEBUG" ]]; then
+    echo "$@"
+  fi
+}
+
+function fail() {
+  printf '%s\n' "$1" >&2  ## Send message to stderr. Exclude >&2 if you don't want it that way.
+  exit "${2-1}"  ## Return a code specified by $2 or 1 by default.
+}
+
+function has() {
+  # Check if a command is in $PATH
+  which "$@" > /dev/null 2>&1
+}
+
+if has apt-cache; then
+  apt-cache search "$@" | \
+  sort | \
+  cut --delimiter ' ' --fields 1 | \
+  fzf --multi --cycle --reverse --preview 'apt-cache show {1}' | \
+  xargs -r sudo apt install -y
+else
+  fail "Cannot find apt in $PATH. 
+  
+Are you sure you're on a Debian or Ubuntu system?"
+fi
