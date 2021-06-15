@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Add our plugin's bin diretory to the user's path
+# Add our plugin's bin directory to the user's path
 local FZF_PLUGIN_BIN="$(dirname $0)/bin"
 export PATH="${PATH}:${FZF_PLUGIN_BIN}"
 unset FZF_PLUGIN_BIN
