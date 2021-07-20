@@ -77,3 +77,7 @@ add `antigen bundle unixorn/fzf-zsh-plugin` to your `.zshrc`
 2. Add `source /path/to/repository/checkout/fzf-zsh-plugin.plugin.zsh` to your `.zshrc` file.
 
 The scripts in this collection don't actually require you to be using ZSH as your login shell, they're being distributed as an [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh)-compatible plugin because it's convenient for me.
+
+## Other FZF resources
+
+- [Fuzzy Git Checkout](https://polothy.github.io/post/2019-08-19-fzf-git-checkout/) - Mark Nielsen wrote a good blog post showing how to use [fzf](https://github.com/junegunn/fzf) for `git` checkouts.
