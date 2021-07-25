@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 #
 # Original Author: Mark Nielsen
 # Original source: https://polothy.github.io/post/2019-08-19-fzf-git-checkout/
@@ -16,6 +16,14 @@ fail() {
 has() {
   which "$@" > /dev/null 2>&1
 }
+
+in_git_repo() {
+  git rev-parse HEAD > /dev/null 2>&1
+}
+
+if ! in_git_repo; then
+  fail "Not in a git repository"
+fi
 
 if ! has fzf; then
   fail "Can't find fzf in your PATH"
