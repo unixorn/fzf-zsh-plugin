@@ -1,0 +1,58 @@
+#!/usr/bin/env zsh
+#
+# Original Author: Mark Nielsen
+# Original source: https://polothy.github.io/post/2019-08-19-fzf-git-checkout/
+
+set -o pipefail
+if [[ -n "$DEBUG" ]]; then
+  set -x
+fi
+
+fail() {
+  printf '%s\n' "$1" >&2  ## Send message to stderr. Exclude >&2 if you don't want it that way.
+  exit "${2-1}"  ## Return a code specified by $2 or 1 by default.
+}
+
+has() {
+  which "$@" > /dev/null 2>&1
+}
+
+in_git_repo() {
+  git rev-parse HEAD > /dev/null 2>&1
+}
+
+if ! in_git_repo; then
+  fail "Not in a git repository"
+fi
+
+if ! has fzf; then
+  fail "Can't find fzf in your PATH"
+fi
+
+if ! has git; then
+  fail "Can't find git in your PATH"
+fi
+
+fzf-git-checkout() {
+    git rev-parse HEAD > /dev/null 2>&1 || return
+
+    local branch
+
+    branch=$(fzf-git-branch)
+    if [[ "$branch" = "" ]]; then
+        echo "No branch selected."
+        return
+    fi
+
+    # If branch name starts with 'remotes/' then it is a remote branch. By
+    # using --track and a remote branch name, it is the same as:
+    # git checkout -b branchName --track origin/branchName
+    if [[ "$branch" = 'remotes/'* ]]; then
+        git checkout --track $branch
+    else
+        git checkout $branch;
+    fi
+}
+
+# shellcheck disable=SC2068
+fzf-git-checkout $@
