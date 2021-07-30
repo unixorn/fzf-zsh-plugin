@@ -70,7 +70,7 @@ add `antigen bundle unixorn/fzf-zsh-plugin` to your `.zshrc`
 ### [Oh-My-Zsh](http://ohmyz.sh/)
 
 1. `cd ~/.oh-my-zsh/custom/plugins`
-2. `git clone git@github.com:unixorn/fzf-zsh-plugin.git fzf-zsh`
+2. `git clone https://github.com/unixorn/fzf-zsh-plugin.git fzf-zsh`
 3. Add tumult to your plugin list - edit `~.zshrc` and change `plugins=(...)` to `plugins=(... fzf-zsh)`
 
 ### Without using a framework
