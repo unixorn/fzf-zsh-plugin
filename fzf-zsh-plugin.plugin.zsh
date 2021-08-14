@@ -47,48 +47,53 @@ if [[ ! -f ~/.fzf.zsh ]]; then
   cp "$(dirname $0)/fzf-settings.zsh" ~/.fzf.zsh
 fi
 
-
 # Source this before we start examining things so we can override the
 # defaults cleanly.
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
 
 # Reasonable defaults. Exclude .git directory and the node_modules cesspit.
-FZF_DEFAULT_COMMAND='find . -type f ( -path .git -o -path node_modules ) -prune'
+# Don't step on user's FZF_DEFAULT_COMMAND
+if [[ -z "$FZF_DEFAULT_COMMAND" ]]; then
+  export FZF_DEFAULT_COMMAND='find . -type f ( -path .git -o -path node_modules ) -prune'
 
-if has rg; then
-  # rg is faster than find, so use it instead.
-  export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
+  if has rg; then
+    # rg is faster than find, so use it instead.
+    export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
+  fi
 fi
 
-export FZF_DEFAULT_OPTS="--layout=reverse
---info=inline
---height=80%
---multi
---preview-window=:hidden
---color='hl:148,hl+:154,pointer:032,marker:010,bg+:237,gutter:008'
---prompt='∼ ' --pointer='▶' --marker='✓'
---bind '?:toggle-preview'
---bind 'ctrl-a:select-all'
---bind 'ctrl-e:execute(echo {+} | xargs -o vim)'
---bind 'ctrl-v:execute(code {+})'
-"
+if [[ -z "$FZF_DEFAULT_OPTS" ]]; then
+  export FZF_DEFAULT_OPTS="--layout=reverse
+  --info=inline
+  --height=80%
+  --multi
+  --preview-window=:hidden
+  --color='hl:148,hl+:154,pointer:032,marker:010,bg+:237,gutter:008'
+  --prompt='∼ ' --pointer='▶' --marker='✓'
+  --bind '?:toggle-preview'
+  --bind 'ctrl-a:select-all'
+  --bind 'ctrl-e:execute(echo {+} | xargs -o vim)'
+  --bind 'ctrl-v:execute(code {+})'
+  "
 
-if has bat; then
-  # bat will syntax colorize files for you
-  export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --preview '([[ -f {} ]] && (bat --style=numbers --color=always {} || cat {})) || ([[ -d {} ]] && (tree -C {} | less)) || echo {} 2> /dev/null | head -200'"
+  if has bat; then
+    # bat will syntax colorize files for you
+    export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --preview '([[ -f {} ]] && (bat --style=numbers --color=always {} || cat {})) || ([[ -d {} ]] && (tree -C {} | less)) || echo {} 2> /dev/null | head -200'"
+  fi
+
+  if has pbcopy; then
+    # on macOS, make ^Y yank the selection to the system clipboard
+    export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --bind 'ctrl-y:execute-silent(echo {+} | pbcopy)'"
+  fi
+
+  # If fd command is installed, use it instead of find
+  if has 'fd'; then  
+    # Show hidden, and exclude .git and the pigsty node_modules files
+    export FZF_DEFAULT_COMMAND="fd --hidden --follow --exclude '.git' --exclude 'node_modules'"
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+    export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type d"
+  fi
 fi
-
-if has pbcopy; then
-  # on macOS, make ^Y yank the selection to the system clipboard
-  export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --bind 'ctrl-y:execute-silent(echo {+} | pbcopy)'"
-fi
-
-# If fd command is installed, use it instead of find
-if has 'fd'; then  
-  # Show hidden, and exclude .git and the pigsty node_modules files
-  export FZF_DEFAULT_COMMAND="fd --hidden --follow --exclude '.git' --exclude 'node_modules'"
-  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-  export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type d"
 
   _fzf_compgen_dir() {
     fd --type d . "$1"
