@@ -23,14 +23,30 @@ function has() {
   which "$@" > /dev/null 2>&1
 }
 
+function cleanup() {
+  if [[ -d "$SCRATCH_D" ]]; then
+    rm -fr "$SCRATCH_D"
+  fi  
+}  
+
+# Set up a working scratch directory
+SCRATCH_D=$(mktemp -d)
+
+if [[ ! "$SCRATCH_D" || ! -d "$SCRATCH_D" ]]; then
+  echo "Could not create temp dir"
+  exit 1
+fi  
+
+trap cleanup EXIT
+
 # browse Chrome history
 chrome-history() {
   local cols sep chrome_history open
   cols=$(( COLUMNS / 3 ))
   sep='{::}'
 
-  cp -f "$chrome_history" /tmp/h
-  sqlite3 -separator $sep /tmp/h \
+  cp -f "$chrome_history" "${SCRATCH_D}/chrome-history.sqlite"
+  sqlite3 -separator $sep "${SCRATCH_D}/chrome-history.sqlite" \
     "select substr(title, 1, $cols), url
      from urls order by last_visit_time desc" |
   awk -F $sep '{printf "%-'$cols's  \x1b[36m%s\x1b[m\n", $1, $2}' |
