@@ -45,8 +45,8 @@ chrome-history() {
   cols=$(( COLUMNS / 3 ))
   sep='{::}'
 
-  cp -f "$chrome_history" ${SCRATCH_D}/chrome-history.sqlite
-  sqlite3 -separator $sep ${SCRATCH_D}/chrome-history.sqlite \
+  cp -f "$chrome_history" "${SCRATCH_D}/chrome-history.sqlite"
+  sqlite3 -separator $sep "${SCRATCH_D}/chrome-history.sqlite" \
     "select substr(title, 1, $cols), url
      from urls order by last_visit_time desc" |
   awk -F $sep '{printf "%-'$cols's  \x1b[36m%s\x1b[m\n", $1, $2}' |
