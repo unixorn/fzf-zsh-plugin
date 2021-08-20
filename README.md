@@ -16,6 +16,7 @@
   - [Antigen](#antigen)
   - [Oh-My-Zsh](#oh-my-zsh)
   - [Without using a framework](#without-using-a-framework)
+- [Other FZF resources](#other-fzf-resources)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -71,12 +72,12 @@ add `antigen bundle unixorn/fzf-zsh-plugin` to your `.zshrc`
 ### [Oh-My-Zsh](http://ohmyz.sh/)
 
 1. `cd ~/.oh-my-zsh/custom/plugins`
-2. `git clone https://github.com/unixorn/fzf-zsh-plugin.git fzf-zsh`
-3. Add tumult to your plugin list - edit `~.zshrc` and change `plugins=(...)` to `plugins=(... fzf-zsh)`
+2. `git clone https://github.com/unixorn/fzf-zsh-plugin.git fzf-zsh-plugin`
+3. Add **fzf-zsh-plugin** to your plugin list - edit `~.zshrc` and change `plugins=(...)` to `plugins=(... fzf-zsh-plugin)`
 
 ### Without using a framework
 
-1. git clone this repository, then add its bin directory to your `$PATH`.
+1. `git clone git@github.com:unixorn/fzf-zsh-plugin.git`, then add its bin directory to your `$PATH`.
 2. Add `source /path/to/repository/checkout/fzf-zsh-plugin.plugin.zsh` to your `.zshrc` file.
 
 The scripts in this collection don't actually require you to be using ZSH as your login shell, they're being distributed as an [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh)-compatible plugin because it's convenient for me.
