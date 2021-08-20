@@ -92,17 +92,15 @@ if [[ -z "$FZF_DEFAULT_OPTS" ]]; then
     export FZF_DEFAULT_COMMAND="fd --hidden --follow --exclude '.git' --exclude 'node_modules'"
     export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
     export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type d"
+    
+    _fzf_compgen_dir() {
+      fd --type d . "$1"
+    }
+
+    _fzf_compgen_path() {
+      fd . "$1"
+    }
   fi
-fi
-
-  _fzf_compgen_dir() {
-    fd --type d . "$1"
-  }
-
-  _fzf_compgen_path() {
-    fd . "$1"
-  }
-
 fi
 
 if has tree; then
