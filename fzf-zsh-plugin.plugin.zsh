@@ -60,6 +60,21 @@ if [[ -z "$FZF_DEFAULT_COMMAND" ]]; then
     # rg is faster than find, so use it instead.
     export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!{.git,node_modules}/**"'
   fi
+
+  # If fd command is installed, use it instead of find
+  if has 'fd'; then
+    # Show hidden, and exclude .git and the pigsty node_modules files
+    export FZF_DEFAULT_COMMAND="fd --hidden --follow --exclude '.git' --exclude 'node_modules'"
+    export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type d"
+
+    _fzf_compgen_dir() {
+      fd --type d . "$1"
+    }
+
+    _fzf_compgen_path() {
+      fd . "$1"
+    }
+  fi
 fi
 
 if [[ -z "$FZF_DEFAULT_OPTS" ]]; then
@@ -84,22 +99,6 @@ if [[ -z "$FZF_DEFAULT_OPTS" ]]; then
   if has pbcopy; then
     # on macOS, make ^Y yank the selection to the system clipboard
     export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --bind 'ctrl-y:execute-silent(echo {+} | pbcopy)'"
-  fi
-
-  # If fd command is installed, use it instead of find
-  if has 'fd'; then  
-    # Show hidden, and exclude .git and the pigsty node_modules files
-    export FZF_DEFAULT_COMMAND="fd --hidden --follow --exclude '.git' --exclude 'node_modules'"
-    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-    export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type d"
-    
-    _fzf_compgen_dir() {
-      fd --type d . "$1"
-    }
-
-    _fzf_compgen_path() {
-      fd . "$1"
-    }
   fi
 fi
 
