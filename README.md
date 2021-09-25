@@ -20,15 +20,15 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-ZSH plugin to enable using [fzf](https://github.com/junegunn/fzf) to search command history and for files.
+This ZSH plugin enables using [fzf](https://github.com/junegunn/fzf) to search your command history and do file searches.
 
-This will automagically install `fzf` into your home directory if it isn't already there, and bind `^R` to an `fzf`-powered search of your command history.
+It will automagically install `fzf` into your home directory if it isn't already there, and bind `^R` to an `fzf`-powered search of your command history.
 
-Used by the [zsh-quickstart-kit](https://github.com/unixorn/zsh-quickstart-kit) to make the default setup have a more 'batteries included' feel.
+Created for the [zsh-quickstart-kit](https://github.com/unixorn/zsh-quickstart-kit) to make the default setup have a more 'batteries included' feel.
 
 Yes, there is a plugin baked into [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh), this allows easy `fzf` integration for other frameworks and shells, and adds some helper scripts.
 
-Note - yes, these scripts could all be ZSH functions instead of scripts in the `bin` directory. We prefer to use standalone scripts so that non-ZSH users can also use the repository by adding its `bin` directory to their `$PATH`.
+Note - while these scripts could all be ZSH functions instead of scripts in the `bin` directory, it uses standalone scripts so that non-ZSH users can also use the repository by adding its `bin` directory to their `$PATH`.
 
 ## Contents
 
@@ -59,15 +59,15 @@ Note - yes, these scripts could all be ZSH functions instead of scripts in the `
 
 ## Installing
 
-You probably want this plugin to be last in your framework's list of plugins to load. It dynamically generates `$FZF_DEFAULT_OPT` and `$FZF_DEFAULT_COMMAND` based on whether it sees things like `rg` and `bat` in your `$PATH`, so it should come after other plugins have had a chance to extend `$PATH`.
+You should set this plugin to be last, or near to last in your framework's list of plugins to load. It dynamically generates `$FZF_DEFAULT_OPT` and `$FZF_DEFAULT_COMMAND` based on whether it sees things like `rg` and `bat` in your `$PATH`, so it should come after other plugins have had a chance to extend your `$PATH`.
 
-### Zgenom
+### [Zgenom](https://github.com/jandamm/zgenom)
 
-add `zgenom load unixorn/fzf-zsh-plugin` to your `.zshrc` with your other load commands.
+Add `zgenom load unixorn/fzf-zsh-plugin` to your `.zshrc` with your other load commands.
 
-### Antigen
+### [Antigen](https://github.com/zsh-users/antigen)
 
-add `antigen bundle unixorn/fzf-zsh-plugin` to your `.zshrc`
+Add `antigen bundle unixorn/fzf-zsh-plugin` to your `.zshrc`
 
 ### [Oh-My-Zsh](http://ohmyz.sh/)
 
@@ -77,7 +77,7 @@ add `antigen bundle unixorn/fzf-zsh-plugin` to your `.zshrc`
 
 ### Without using a framework
 
-1. `git clone git@github.com:unixorn/fzf-zsh-plugin.git`, then add its bin directory to your `$PATH`.
+1. `git clone git@github.com:unixorn/fzf-zsh-plugin.git`, then add its `bin` directory to your `$PATH`.
 2. Add `source /path/to/repository/checkout/fzf-zsh-plugin.plugin.zsh` to your `.zshrc` file.
 
 The scripts in this collection don't actually require you to be using ZSH as your login shell, they're being distributed as an [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh)-compatible plugin because it's convenient for me.
