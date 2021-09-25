@@ -34,22 +34,34 @@ function debugOut() {
 # Install fzf, and enable it for command line history searching and
 # file searching.
 
+# Determine where fzf is installed
+local xdg_path="${XDG_CONFIG_HOME:-$HOME/.config}"
+local fzf_path
+local fzf_conf
+if [[ -d "$xdg_path/fzf" ]]; then
+  fzf_path="$xdg_path/fzf"
+  fzf_conf="$fzf_path/fzf.zsh"
+else
+  fzf_path=~/.fzf
+  fzf_conf=~/.fzf.zsh
+fi
+
 # Install fzf into ~ if it hasn't already been installed.
 if ! has fzf; then
-  if [[ ! -d ~/.fzf ]]; then
-    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+  if [[ ! -d $fzf_path ]]; then
+    git clone --depth 1 https://github.com/junegunn/fzf.git $fzf_path
   fi
 fi
 
 # Install some default settings if user doesn't already have fzf
 # settings configured.
-if [[ ! -f ~/.fzf.zsh ]]; then
-  cp "$(dirname $0)/fzf-settings.zsh" ~/.fzf.zsh
+if [[ ! -f $fzf_conf ]]; then
+  cp "$(dirname $0)/fzf-settings.zsh" $fzf_conf
 fi
 
 # Source this before we start examining things so we can override the
 # defaults cleanly.
-[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+[[ -f $fzf_conf ]] && source $fzf_conf
 
 # Reasonable defaults. Exclude .git directory and the node_modules cesspit.
 # Don't step on user's FZF_DEFAULT_COMMAND
@@ -119,8 +131,8 @@ fi
 
 alias fkill='fzf-kill'
 
-if [[ -d ~/.fzf/man ]]; then
-  export MANPATH="$MANPATH:~/.fzf/man"
+if [[ -d $fzf_path/man ]]; then
+  export MANPATH="$MANPATH:$fzf_path/man"
 fi
 
 if has z; then
