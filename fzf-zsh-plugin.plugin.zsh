@@ -58,7 +58,7 @@ if [[ -z "$FZF_DEFAULT_COMMAND" ]]; then
 
   if has rg; then
     # rg is faster than find, so use it instead.
-    export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
+    export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!{.git,node_modules}/**"'
   fi
 fi
 
