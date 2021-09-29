@@ -45,6 +45,7 @@ else
   fzf_path=~/.fzf
   fzf_conf=~/.fzf.zsh
 fi
+unset xdg_path
 
 # Install fzf into ~ if it hasn't already been installed.
 if ! has fzf; then
@@ -62,11 +63,13 @@ fi
 # Source this before we start examining things so we can override the
 # defaults cleanly.
 [[ -f $fzf_conf ]] && source $fzf_conf
+unset fzf_conf
 
 # Reasonable defaults. Exclude .git directory and the node_modules cesspit.
 # Don't step on user's FZF_DEFAULT_COMMAND
 if [[ -z "$FZF_DEFAULT_COMMAND" ]]; then
   export FZF_DEFAULT_COMMAND='find . -type f ( -path .git -o -path node_modules ) -prune'
+  export FZF_ALT_C_COMMAND='find . -type d ( -path .git -o -path node_modules ) -prune'
 
   if has rg; then
     # rg is faster than find, so use it instead.
@@ -74,19 +77,22 @@ if [[ -z "$FZF_DEFAULT_COMMAND" ]]; then
   fi
 
   # If fd command is installed, use it instead of find
-  if has 'fd'; then
+  has 'fd' && _fd_cmd="fd"
+  has 'fdfind' && _fd_cmd="fdfind"
+  if [[ -n $_fd_cmd ]] then
     # Show hidden, and exclude .git and the pigsty node_modules files
-    export FZF_DEFAULT_COMMAND="fd --hidden --follow --exclude '.git' --exclude 'node_modules'"
+    export FZF_DEFAULT_COMMAND="$_fd_cmd --hidden --follow --exclude '.git' --exclude 'node_modules'"
     export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type d"
 
     _fzf_compgen_dir() {
-      fd --type d . "$1"
+      eval "$FZF_ALT_C_COMMAND . \"$1\""
     }
 
     _fzf_compgen_path() {
-      fd . "$1"
+      eval "$FZF_DEFAULT_COMMAND . \"$1\""
     }
   fi
+  unset _fd_cmd
 fi
 
 if [[ -z "$FZF_DEFAULT_OPTS" ]]; then
@@ -133,6 +139,7 @@ alias fkill='fzf-kill'
 if [[ -d $fzf_path/man ]]; then
   export MANPATH="$MANPATH:$fzf_path/man"
 fi
+unset fzf_path
 
 if has z; then
   unalias z 2> /dev/null
