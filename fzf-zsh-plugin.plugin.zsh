@@ -45,6 +45,7 @@ else
   fzf_path=~/.fzf
   fzf_conf=~/.fzf.zsh
 fi
+unset xdg_path
 
 # Install fzf into ~ if it hasn't already been installed.
 if ! has fzf; then
@@ -62,6 +63,7 @@ fi
 # Source this before we start examining things so we can override the
 # defaults cleanly.
 [[ -f $fzf_conf ]] && source $fzf_conf
+unset fzf_conf
 
 # Reasonable defaults. Exclude .git directory and the node_modules cesspit.
 # Don't step on user's FZF_DEFAULT_COMMAND
@@ -90,6 +92,7 @@ if [[ -z "$FZF_DEFAULT_COMMAND" ]]; then
       eval "$FZF_DEFAULT_COMMAND . \"$1\""
     }
   fi
+  unset _fd_cmd
 fi
 
 if [[ -z "$FZF_DEFAULT_OPTS" ]]; then
@@ -136,6 +139,7 @@ alias fkill='fzf-kill'
 if [[ -d $fzf_path/man ]]; then
   export MANPATH="$MANPATH:$fzf_path/man"
 fi
+unset fzf_path
 
 if has z; then
   unalias z 2> /dev/null
