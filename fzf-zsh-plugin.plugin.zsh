@@ -67,6 +67,7 @@ fi
 # Don't step on user's FZF_DEFAULT_COMMAND
 if [[ -z "$FZF_DEFAULT_COMMAND" ]]; then
   export FZF_DEFAULT_COMMAND='find . -type f ( -path .git -o -path node_modules ) -prune'
+  export FZF_ALT_C_COMMAND='find . -type d ( -path .git -o -path node_modules ) -prune'
 
   if has rg; then
     # rg is faster than find, so use it instead.
