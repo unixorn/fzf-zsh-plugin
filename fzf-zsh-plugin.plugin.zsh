@@ -99,7 +99,7 @@ if [[ -z "$FZF_DEFAULT_OPTS" ]]; then
   --prompt='∼ ' --pointer='▶' --marker='✓'
   --bind '?:toggle-preview'
   --bind 'ctrl-a:select-all'
-  --bind 'ctrl-e:execute(echo {+} | xargs -o vim)'
+  --bind 'ctrl-e:execute(vim {+} >/dev/tty)'
   --bind 'ctrl-v:execute(code {+})'
   "
 
