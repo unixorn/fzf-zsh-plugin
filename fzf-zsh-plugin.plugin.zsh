@@ -81,11 +81,11 @@ if [[ -z "$FZF_DEFAULT_COMMAND" ]]; then
     export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type d"
 
     _fzf_compgen_dir() {
-      fd --type d . "$1"
+      eval "$FZF_ALT_C_COMMAND . \"$1\""
     }
 
     _fzf_compgen_path() {
-      fd . "$1"
+      eval "$FZF_DEFAULT_COMMAND . \"$1\""
     }
   fi
 fi
