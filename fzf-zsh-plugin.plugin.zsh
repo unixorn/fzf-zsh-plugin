@@ -75,9 +75,11 @@ if [[ -z "$FZF_DEFAULT_COMMAND" ]]; then
   fi
 
   # If fd command is installed, use it instead of find
-  if has 'fd'; then
+  has 'fd' && _fd_cmd="fd"
+  has 'fdfind' && _fd_cmd="fdfind"
+  if [[ -n $_fd_cmd ]] then
     # Show hidden, and exclude .git and the pigsty node_modules files
-    export FZF_DEFAULT_COMMAND="fd --hidden --follow --exclude '.git' --exclude 'node_modules'"
+    export FZF_DEFAULT_COMMAND="$_fd_cmd --hidden --follow --exclude '.git' --exclude 'node_modules'"
     export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type d"
 
     _fzf_compgen_dir() {
