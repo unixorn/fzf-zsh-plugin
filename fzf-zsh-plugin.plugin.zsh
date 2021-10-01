@@ -162,6 +162,17 @@ function cdf() {
   file=$(fzf +m -q "$1") && dir=$(dirname "$file") && cd "$dir"
 }
 
+if has pbcopy; then
+  if has ghead; then
+    function falias {
+        # Search alias by key or values
+        local out
+        out=$(alias | fzf)
+        echo -n "$(echo -n "${out}" | cut -d= -f2 | ghead -c -1 | pbcopy)"
+    }
+  fi
+fi
+
 # Cleanup internal functions
 unset -f debugOut
 unset -f has
