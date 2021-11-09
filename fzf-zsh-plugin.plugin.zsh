@@ -51,6 +51,7 @@ unset xdg_path
 if ! has fzf; then
   if [[ ! -d $fzf_path ]]; then
     git clone --depth 1 https://github.com/junegunn/fzf.git $fzf_path
+    $fzf_path/install --bin
   fi
 fi
 
