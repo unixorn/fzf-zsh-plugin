@@ -22,7 +22,7 @@ fi
 
 # Update (one or multiple) selected application(s)
 brew-update-plugin() {
-  upd=$(brew leaves | fzf -m)
+  upd=$(brew leaves | fzf -m --preview 'brew info {}')
 
   if [[ $upd ]]; then
     # shellcheck disable=SC2086

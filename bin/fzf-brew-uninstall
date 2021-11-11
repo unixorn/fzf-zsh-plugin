@@ -22,7 +22,7 @@ fi
 
 # Delete (one or multiple) selected application(s)
 fzf-brew-uninstall() {
-  uninst=$(brew leaves | fzf -m)
+  uninst=$(brew leaves | fzf -m --preview 'brew info {}')
 
   if [[ $uninst ]]; then
     for prog in $uninst
