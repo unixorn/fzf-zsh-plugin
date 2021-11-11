@@ -24,7 +24,7 @@ fi
 # using "brew search" as source input
 function fzf-brew-install(){
   # shellcheck disable=SC2068
-  inst=$(brew search $@ | fzf -m)
+  inst=$(brew search $@ | fzf -m --preview 'brew info {}')
 
   if [[ $inst ]]; then
     for prog in $inst
