@@ -21,11 +21,11 @@ local FZF_COMPLETIONS_D="$(dirname $0)/completions"
 export fpath=($FZF_COMPLETIONS_D "${fpath[@]}" )
 unset FZF_COMPLETIONS_D
 
-function has() {
+function _fzf_has() {
   which "$@" > /dev/null 2>&1
 }
 
-function debugOut() {
+function _fzf_debugOut() {
   if [[ -n "$DEBUG" ]]; then
     echo "$@"
   fi
@@ -48,7 +48,7 @@ fi
 unset xdg_path
 
 # Install fzf into ~ if it hasn't already been installed.
-if ! has fzf; then
+if ! _fzf_has fzf; then
   if [[ ! -d $fzf_path ]]; then
     git clone --depth 1 https://github.com/junegunn/fzf.git $fzf_path
     $fzf_path/install --bin
@@ -58,6 +58,7 @@ fi
 # Install some default settings if user doesn't already have fzf
 # settings configured.
 if [[ ! -f $fzf_conf ]]; then
+  echo "Can't find a fzf configuration file at $fzf_conf, creating a default one"
   cp "$(dirname $0)/fzf-settings.zsh" $fzf_conf
 fi
 
@@ -72,14 +73,14 @@ if [[ -z "$FZF_DEFAULT_COMMAND" ]]; then
   export FZF_DEFAULT_COMMAND='find . -type f ( -path .git -o -path node_modules ) -prune'
   export FZF_ALT_C_COMMAND='find . -type d ( -path .git -o -path node_modules ) -prune'
 
-  if has rg; then
+  if _fzf_has rg; then
     # rg is faster than find, so use it instead.
     export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!{.git,node_modules}/**"'
   fi
 
   # If fd command is installed, use it instead of find
-  has 'fd' && _fd_cmd="fd"
-  has 'fdfind' && _fd_cmd="fdfind"
+  _fzf_has 'fd' && _fd_cmd="fd"
+  _fzf_has 'fdfind' && _fd_cmd="fdfind"
   if [[ -n $_fd_cmd ]] then
     # Show hidden, and exclude .git and the pigsty node_modules files
     export FZF_DEFAULT_COMMAND="$_fd_cmd --hidden --follow --exclude '.git' --exclude 'node_modules'"
@@ -96,6 +97,7 @@ if [[ -z "$FZF_DEFAULT_COMMAND" ]]; then
   unset _fd_cmd
 fi
 
+# Don't step on a user's existing FZF_DEFAULT_OPTS
 if [[ -z "$FZF_DEFAULT_OPTS" ]]; then
   export FZF_DEFAULT_OPTS="--layout=reverse
   --info=inline
@@ -110,18 +112,18 @@ if [[ -z "$FZF_DEFAULT_OPTS" ]]; then
   --bind 'ctrl-v:execute(code {+})'
   "
 
-  if has bat; then
+  if _fzf_has bat; then
     # bat will syntax colorize files for you
     export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --preview '([[ -f {} ]] && (bat --style=numbers --color=always {} || cat {})) || ([[ -d {} ]] && (tree -C {} | less)) || echo {} 2> /dev/null | head -200'"
   fi
 
-  if has pbcopy; then
+  if _fzf_has pbcopy; then
     # on macOS, make ^Y yank the selection to the system clipboard
     export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --bind 'ctrl-y:execute-silent(echo {+} | pbcopy)'"
   fi
 fi
 
-if has tree; then
+if _fzf_has tree; then
   function fzf-change-directory() {
     local directory=$(
       fd --type d | \
@@ -142,7 +144,7 @@ if [[ -d $fzf_path/man ]]; then
 fi
 unset fzf_path
 
-if has z; then
+if _fzf_has z; then
   unalias z 2> /dev/null
   _fzf_z="_z"
   (( ${+functions[zshz]} )) && { _fzf_z="zshz"; compdef _zshz z; }
@@ -163,8 +165,8 @@ function cdf() {
   file=$(fzf +m -q "$1") && dir=$(dirname "$file") && cd "$dir"
 }
 
-if has pbcopy; then
-  if has ghead; then
+if _fzf_has pbcopy; then
+  if _fzf_has ghead; then
     function falias {
         # Search alias by key or values
         local out
@@ -175,5 +177,5 @@ if has pbcopy; then
 fi
 
 # Cleanup internal functions
-unset -f debugOut
-unset -f has
+unset -f _fzf_debugOut
+unset -f _fzf_has
