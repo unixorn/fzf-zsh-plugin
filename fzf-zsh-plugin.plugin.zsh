@@ -14,7 +14,7 @@
 
 # Add our plugin's bin directory to the user's path
 local FZF_PLUGIN_BIN="$(dirname $0)/bin"
-export PATH="${PATH}:${FZF_PLUGIN_BIN}"
+path+=(${FZF_PLUGIN_BIN})
 unset FZF_PLUGIN_BIN
 
 local FZF_COMPLETIONS_D="$(dirname $0)/completions"
@@ -140,7 +140,7 @@ fi
 alias fkill='fzf-kill'
 
 if [[ -d $fzf_path/man ]]; then
-  export MANPATH="$MANPATH:$fzf_path/man"
+    manpath+=("$MANPATH:$fzf_path/man")
 fi
 unset fzf_path
 
