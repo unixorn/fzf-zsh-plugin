@@ -67,7 +67,9 @@ Add `zgenom load unixorn/fzf-zsh-plugin` to your `.zshrc` with your other load c
 
 ### [Antigen](https://github.com/zsh-users/antigen)
 
-Add `antigen bundle unixorn/fzf-zsh-plugin` to your `.zshrc`
+Add `antigen bundle unixorn/fzf-zsh-plugin@main` to your `.zshrc`
+
+☝  **Note** that until https://github.com/zsh-users/antigen/issues/717 gets fixed in Antigen, it only recognizes plugins in `master` branch. So you need to explicitly specify `@main` here.
 
 ### [Oh-My-Zsh](http://ohmyz.sh/)
 
