@@ -14,7 +14,9 @@ fif() {
     echo "Need a string to search for!";
     return 1;
   fi
-  rg --files-with-matches --no-messages "$1" | fzf "$FZF_PREVIEW_WINDOW" --preview "rg --ignore-case --pretty --context 10 '$1' {}"
+  # if FZF_PREVIEW_WINDOW is undefined, quoting it breaks the script
+  # shellcheck disable=SC2086
+  rg --files-with-matches --no-messages "$1" | fzf $FZF_PREVIEW_WINDOW --preview "rg --ignore-case --pretty --context 10 '$1' {}"
 }
 
 command -v rg >/dev/null
