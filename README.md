@@ -69,7 +69,7 @@ Add `zgenom load unixorn/fzf-zsh-plugin` to your `.zshrc` with your other load c
 
 Add `antigen bundle unixorn/fzf-zsh-plugin@main` to your `.zshrc`
 
-☝  **Note** that until https://github.com/zsh-users/antigen/issues/717 gets fixed in Antigen, it only recognizes plugins in `master` branch. So you need to explicitly specify `@main` here.
+☝  **Note** that until <https://github.com/zsh-users/antigen/issues/717> gets fixed in Antigen, it only recognizes plugins in `master` branch. So you need to explicitly specify `@main` here.
 
 ### [Oh-My-Zsh](http://ohmyz.sh/)
 
@@ -83,6 +83,12 @@ Add `antigen bundle unixorn/fzf-zsh-plugin@main` to your `.zshrc`
 2. Add `source /path/to/repository/checkout/fzf-zsh-plugin.plugin.zsh` to your `.zshrc` file.
 
 The scripts in this collection don't actually require you to be using ZSH as your login shell, they're being distributed as an [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh)-compatible plugin because it's convenient for me.
+
+### Customization
+
+You can customize a few features by exporting the following environment variables:
+
+- `export FZF_PREVIEW_WINDOW=''` – you can set any value supported by `fzf --preview-window` option, e.g. `right:65%:nohidden` will show the preview by default.
 
 ## Other FZF resources
 

@@ -97,13 +97,15 @@ if [[ -z "$FZF_DEFAULT_COMMAND" ]]; then
   unset _fd_cmd
 fi
 
-# Don't step on a user's existing FZF_DEFAULT_OPTS
+# Don't step on user's defined variables
+[[ -z "$FZF_PREVIEW_WINDOW" ]] && export FZF_PREVIEW_WINDOW=':hidden'
 if [[ -z "$FZF_DEFAULT_OPTS" ]]; then
-  export FZF_DEFAULT_OPTS="--layout=reverse
+  export FZF_DEFAULT_OPTS="
+  --layout=reverse
   --info=inline
   --height=80%
   --multi
-  --preview-window=:hidden
+  --preview-window=${FZF_PREVIEW_WINDOW}
   --color='hl:148,hl+:154,pointer:032,marker:010,bg+:237,gutter:008'
   --prompt='∼ ' --pointer='▶' --marker='✓'
   --bind '?:toggle-preview'
