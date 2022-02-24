@@ -81,7 +81,7 @@ if [[ -z "$FZF_DEFAULT_COMMAND" ]]; then
   # If fd command is installed, use it instead of find
   _fzf_has 'fd' && _fd_cmd="fd"
   _fzf_has 'fdfind' && _fd_cmd="fdfind"
-  if [[ -n $_fd_cmd ]] then
+  if [[ -n "$_fd_cmd" ]]; then
     # Show hidden, and exclude .git and the pigsty node_modules files
     export FZF_DEFAULT_COMMAND="$_fd_cmd --hidden --follow --exclude '.git' --exclude 'node_modules'"
     export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type d"
@@ -100,29 +100,30 @@ fi
 # Don't step on user's defined variables
 [[ -z "$FZF_PREVIEW_WINDOW" ]] && export FZF_PREVIEW_WINDOW=':hidden'
 if [[ -z "$FZF_DEFAULT_OPTS" ]]; then
-  export FZF_DEFAULT_OPTS="
-  --layout=reverse
-  --info=inline
-  --height=80%
-  --multi
-  --preview-window=${FZF_PREVIEW_WINDOW}
-  --color='hl:148,hl+:154,pointer:032,marker:010,bg+:237,gutter:008'
-  --prompt='∼ ' --pointer='▶' --marker='✓'
-  --bind '?:toggle-preview'
-  --bind 'ctrl-a:select-all'
-  --bind 'ctrl-e:execute(vim {+} >/dev/tty)'
-  --bind 'ctrl-v:execute(code {+})'
-  "
-
+  fzf_default_opts+=(
+    "--layout=reverse"
+    "--info=inline"
+    "--height=80%"
+    "--multi"
+    "--preview-window='${FZF_PREVIEW_WINDOW}'"
+    "--color='hl:148,hl+:154,pointer:032,marker:010,bg+:237,gutter:008'"
+    "--prompt='∼ '"
+    "--pointer='▶'"
+    "--marker='✓'"
+    "--bind '?:toggle-preview'"
+    "--bind 'ctrl-a:select-all'"
+    "--bind 'ctrl-e:execute(vim {+} >/dev/tty)'"
+    "--bind 'ctrl-v:execute(code {+})'"
+  )
   if _fzf_has bat; then
     # bat will syntax colorize files for you
-    export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --preview '([[ -f {} ]] && (bat --style=numbers --color=always {} || cat {})) || ([[ -d {} ]] && (tree -C {} | less)) || echo {} 2> /dev/null | head -200'"
+    fzf_default_opts+=("--preview '([[ -f {} ]] && (bat --style=numbers --color=always {} || cat {})) || ([[ -d {} ]] && (tree -C {} | less)) || echo {} 2> /dev/null | head -200'")
   fi
-
   if _fzf_has pbcopy; then
-    # on macOS, make ^Y yank the selection to the system clipboard
-    export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --bind 'ctrl-y:execute-silent(echo {+} | pbcopy)'"
+    # On macOS, make ^Y yank the selection to the system clipboard. On Linux you can alias pbcopy to `xclip -selection clipboard` or corresponding tool.
+    fzf_default_opts+=("--bind 'ctrl-y:execute-silent(echo {+} | pbcopy)'")
   fi
+  export FZF_DEFAULT_OPTS=$(printf '%s\n' "${fzf_default_opts[@]}")
 fi
 
 if _fzf_has tree; then
