@@ -1,3 +1,9 @@
+# VSCode
+.vscode/
+# IntelliJ
+.idea/
+*.iml
+
 # Compiled ZSH
 *.zwc
 # Byte-compiled / optimized / DLL files
