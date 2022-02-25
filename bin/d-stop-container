@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Select a docker container to remove
+# Stop a docker container
 #
 # From fzf wiki
 
