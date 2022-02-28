@@ -1,0 +1,50 @@
+#!/usr/bin/env sh
+#
+# lessfilter-fzf is a `less` pre-processor intended (but not strictly required) to work together with `lesspipe.sh`.
+#
+# Make the most of it by installing lesspipe.sh, e.g. `brew install lesspipe`, see https://github.com/wofr06/lesspipe
+# When `lesspipe.sh` is available, it will be used to view a wide range of file formats (directories, images, PDFs,
+# CSVs, source code,...).
+#
+# In case that you are not using your own custom `less` pre-processor, it can also be quite handy to use this one. You
+# can export LESSOPEN in your init scripts (.bashrc/.zshrc or similar):
+#
+#   export LESSOPEN='| lessfilter-fzf %s'
+#
+# Ultimately, lesspipe.sh will honor your own `lessfilter` if found in your PATH, leading to the following execution:
+#   lessfilter-fzf > lesspipe.sh > lessfilter
+#
+# Required tools:
+#   - exa
+#   - bat
+#   - chafa, exiftool
+#   - lesspipe.sh (recommended)
+#
+# Credits: This script (beyond any modification) was taken from https://github.com/Aloxaf/fzf-tab/wiki/Preview
+#
+
+EXIT_UNHANDLED=10
+
+has_cmd() {
+  command -v "$1" >/dev/null 2>&1
+}
+
+mime=$(file -bL --mime-type "$1")  # e.g. 'application/pdf'
+category=${mime%%/*}
+# shellcheck disable=SC2034 # left for completion
+kind=${mime##*/}
+
+if [ -d "$1" ] && has_cmd exa; then
+  exa --git --header --long --color=always --icons "$1"
+elif [ "$category" = image ] && has_cmd chafa && has_cmd exiftool; then
+  chafa "$1"
+  exiftool "$1"
+elif has_cmd lesspipe.sh; then
+  # At the time of writing, `lesspipe.sh` does not use `exa` and `chafa`, it just uses `ls` and `exiftool`. It
+  # will ultimately rely on `less` as a sane fallback.
+  lesspipe.sh "$1"
+elif [ "$category" = text ] && has_cmd bat; then  # <-- give priority to lesspipe.sh if available
+	bat "$1"
+else
+  exit $EXIT_UNHANDLED
+fi
