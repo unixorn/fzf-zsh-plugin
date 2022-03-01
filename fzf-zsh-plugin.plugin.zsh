@@ -97,7 +97,21 @@ if [[ -z "$FZF_DEFAULT_COMMAND" ]]; then
   unset _fd_cmd
 fi
 
-# Don't step on user's defined variables
+# Return one of the following preview commands:
+#   - A basic foolproof preview that will rely on available tools or use fallbacks like `cat`.
+#   - An advanced preview using a `less` preprocessor, capable of showing a wide range of formats, incl. images, dirs,
+#     CSVs, and other binary files (depending on available tooling).
+_fzf_preview() {
+  foolproofPreview='([[ -f {} ]] && (bat --style=numbers --color=always {} || cat {})) || ([[ -d {} ]] && (tree -C {} | less)) || echo {} 2>/dev/null | head -n 200'
+  local preview
+  [[ "$FZF_PREVIEW_ADVANCED" == true ]] \
+    && preview="lessfilter-fzf {}" \
+    || preview="$foolproofPreview"
+  echo "$preview"
+}
+
+# Don't step on user's defined variables. Export to potentially leverage them by other scripts.
+[[ -z "$FZF_PREVIEW" ]]        && export FZF_PREVIEW="$(_fzf_preview)"
 [[ -z "$FZF_PREVIEW_WINDOW" ]] && export FZF_PREVIEW_WINDOW=':hidden'
 if [[ -z "$FZF_DEFAULT_OPTS" ]]; then
   fzf_default_opts+=(
@@ -105,6 +119,7 @@ if [[ -z "$FZF_DEFAULT_OPTS" ]]; then
     "--info=inline"
     "--height=80%"
     "--multi"
+    "--preview='${FZF_PREVIEW}'"
     "--preview-window='${FZF_PREVIEW_WINDOW}'"
     "--color='hl:148,hl+:154,pointer:032,marker:010,bg+:237,gutter:008'"
     "--prompt='∼ '"
@@ -115,10 +130,6 @@ if [[ -z "$FZF_DEFAULT_OPTS" ]]; then
     "--bind 'ctrl-e:execute(vim {+} >/dev/tty)'"
     "--bind 'ctrl-v:execute(code {+})'"
   )
-  if _fzf_has bat; then
-    # bat will syntax colorize files for you
-    fzf_default_opts+=("--preview '([[ -f {} ]] && (bat --style=numbers --color=always {} || cat {})) || ([[ -d {} ]] && (tree -C {} | less)) || echo {} 2> /dev/null | head -200'")
-  fi
   if _fzf_has pbcopy; then
     # On macOS, make ^Y yank the selection to the system clipboard. On Linux you can alias pbcopy to `xclip -selection clipboard` or corresponding tool.
     fzf_default_opts+=("--bind 'ctrl-y:execute-silent(echo {+} | pbcopy)'")
@@ -182,3 +193,4 @@ fi
 # Cleanup internal functions
 unset -f _fzf_debugOut
 unset -f _fzf_has
+unset -f _fzf_preview
