@@ -107,6 +107,7 @@ You can customize a few features by exporting the following environment variable
 | ---------------------------------- |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `export FZF_PREVIEW_ADVANCED=true` | Use `less` viewer with a pre-processor to display improved previews for a wide range of files (requires you to install at least `exa`, `bat`, `chafa`, `exiftool`; and very recommended `lesspipe.sh` and the tools it uses underneath: `mdcat`, `in2csv`,...). _This is an opt-in feature._ |
 | `export FZF_PREVIEW_WINDOW=''`     | Set any value supported by `fzf --preview-window` option, e.g. `right:65%:nohidden` will show the preview by default.                                                                                                                                                                        |
+| `export FZF_PATH=''`               | Path to install fzf binary and script, e.g. `${HOME}/.config/fzf`.                                                                            |
 
 ### A note on `lessfilter-fzf`
 

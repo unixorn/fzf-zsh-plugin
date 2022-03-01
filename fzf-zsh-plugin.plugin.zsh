@@ -35,23 +35,20 @@ function _fzf_debugOut() {
 # file searching.
 
 # Determine where fzf is installed
-local xdg_path="${XDG_CONFIG_HOME:-$HOME/.config}"
-local fzf_path
 local fzf_conf
-if [[ -d "$xdg_path/fzf" ]]; then
-  fzf_path="$xdg_path/fzf"
-  fzf_conf="$fzf_path/fzf.zsh"
-else
-  fzf_path=~/.fzf
+if [[ -z "$FZF_PATH" ]]; then
+  FZF_PATH=~/.fzf
   fzf_conf=~/.fzf.zsh
+else
+  fzf_conf="$FZF_PATH/fzf.zsh"
 fi
 unset xdg_path
 
 # Install fzf into ~ if it hasn't already been installed.
 if ! _fzf_has fzf; then
-  if [[ ! -d $fzf_path ]]; then
-    git clone --depth 1 https://github.com/junegunn/fzf.git $fzf_path
-    $fzf_path/install --bin
+  if [[ ! -d $FZF_PATH ]]; then
+    git clone --depth 1 https://github.com/junegunn/fzf.git $FZF_PATH
+    $FZF_PATH/install --bin
   fi
 fi
 
@@ -153,10 +150,9 @@ fi
 
 alias fkill='fzf-kill'
 
-if [[ -d $fzf_path/man ]]; then
-    manpath+=("$MANPATH:$fzf_path/man")
+if [[ -d $FZF_PATH/man ]]; then
+    manpath+=("$MANPATH:$FZF_PATH/man")
 fi
-unset fzf_path
 
 if _fzf_has z; then
   unalias z 2> /dev/null
