@@ -78,9 +78,8 @@ Add `antigen bundle unixorn/fzf-zsh-plugin@main` to your `.zshrc`
 
 ### [Oh-My-Zsh](http://ohmyz.sh/)
 
-1. `cd ~/.oh-my-zsh/custom/plugins`
-2. `git clone https://github.com/unixorn/fzf-zsh-plugin.git fzf-zsh-plugin`
-3. Add **fzf-zsh-plugin** to your plugin list - edit `~.zshrc` and change `plugins=(...)` to `plugins=(... fzf-zsh-plugin)`
+1. `git clone https://github.com/unixorn/fzf-zsh-plugin.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/fzf-zsh-plugin`
+2. Add **fzf-zsh-plugin** to your plugin list - edit `~.zshrc` and change `plugins=(...)` to `plugins=(... fzf-zsh-plugin)`
 
 ### Without using a framework
 
