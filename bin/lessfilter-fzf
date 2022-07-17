@@ -42,7 +42,7 @@ elif [ "$category" = image ] && has_cmd chafa && has_cmd exiftool; then
 elif has_cmd lesspipe.sh; then
   # At the time of writing, `lesspipe.sh` does not use `exa` and `chafa`, it just uses `ls` and `exiftool`. It
   # will ultimately rely on `less` as a sane fallback.
-  lesspipe.sh "$1"
+  lesspipe.sh "$1" 2>/dev/null
 elif [ "$category" = text ] && has_cmd bat; then  # <-- give priority to lesspipe.sh if available
 	bat "$1"
 else
