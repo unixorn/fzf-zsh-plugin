@@ -19,6 +19,8 @@ fif() {
   rg --files-with-matches --no-messages "$1" | fzf --preview-window "$FZF_PREVIEW_WINDOW" --preview "rg --ignore-case --pretty --context 10 '$1' {}"
 }
 
+[[ -z "$FZF_PREVIEW_WINDOW" ]] && export FZF_PREVIEW_WINDOW=':hidden'
+
 command -v rg >/dev/null
 # shellcheck disable=SC2181
 if [[ $? -eq 0 ]]; then
