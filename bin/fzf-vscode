@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+#
+# Based on Mark's script posted to hangops, which in turn was based on
+# the example at https://github.com/junegunn/fzf/blob/master/ADVANCED.md#ripgrep-integration
+#
+# Copyright 2023, Mark Carey
+#
+# shellcheck disable=SC2086
+#
+# 1. Search for text in files using Ripgrep
+# 2. Interactively narrow down the list using fzf
+# 3. Open the file in vscode
+
+set -euo pipefail
+if [[ -n "$DEBUG" ]]; then
+  set -x
+fi
+
+function debug() {
+  if [[ -n "$DEBUG" ]]; then
+    echo "$@"
+  fi
+}
+
+function echo-stderr() {
+  echo "$@" 1>&2  ## Send message to stderr.
+}
+
+function fail() {
+  printf '%s\n' "$1" >&2  ## Send message to stderr. Exclude >&2 if you don't want it that way.
+  exit "${2-1}"  ## Return a code specified by $2 or 1 by default.
+}
+
+function has() {
+  # Check if a command is in $PATH
+  which "$@" > /dev/null 2>&1
+}
+
+# shellcheck disable=SC2016
+function check-dependencies() {
+  if ! has code; then
+    fail 'Could not find code in your $PATH.'
+  fi
+  if ! has fzf; then
+    fail 'Could not find fzf in your $PATH. Installation instructions are at https://github.com/junegunn/fzf'
+  fi
+  if ! has rg; then
+    fail 'Could not find rg in your $PATH. Installation instructions are at https://github.com/BurntSushi/ripgrep'
+  fi
+}
+
+check-dependencies
+
+while getopts n OPTION
+do
+  case "${OPTION}" in
+    n) NEW_WINDOW="--new-window";;
+    *) echo "ERROR: we only support -n" && exit 1;;
+  esac
+done
+shift $((OPTIND-1))
+
+: "${NEW_WINDOW:=""}"
+
+ARGLIST=""
+while IFS=: read -ra SELECTED; do
+  if [ "${#SELECTED[@]}" -gt 0 ]; then
+    ARGLIST+="--goto ${SELECTED[0]}:${SELECTED[1]} "
+  fi
+done < <(
+  rg --color=always --line-number --no-heading --smart-case "${*:-}" |
+    fzf --ansi \
+        --color "hl:-1:underline,hl+:-1:underline:reverse" \
+        --delimiter : \
+        --multi \
+        --preview 'bat --color=always {1} --highlight-line {2}' \
+        --preview-window 'up,60%,border-bottom,+{2}+3/3,~3'
+)
+if [ -n "${ARGLIST}" ]; then
+  code ${NEW_WINDOW} ${ARGLIST}
+fi
