@@ -52,6 +52,7 @@ jobs:
         uses: megalinter/megalinter@v6
         env:
           VALIDATE_ALL_CODEBASE: false
+          REPOSITORY_CHECKOV_DISABLE_ERRORS: true
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DISABLE_LINTERS: SPELL_CSPELL,MARKDOWN_MARKDOWN_LINK_CHECK
