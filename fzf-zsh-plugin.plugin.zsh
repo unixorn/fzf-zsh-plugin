@@ -149,7 +149,7 @@ fi
 alias fkill='fzf-kill'
 
 if [[ -d $FZF_PATH/man ]]; then
-    manpath+=("$MANPATH:$FZF_PATH/man")
+    manpath+=(":$FZF_PATH/man")
 fi
 
 if _fzf_has z; then
