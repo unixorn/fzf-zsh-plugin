@@ -152,7 +152,7 @@ if [[ -d $FZF_PATH/man ]]; then
     manpath+=(":$FZF_PATH/man")
 fi
 
-if _fzf_has z; then
+if _fzf_has z && ! _fzf_has zoxide; then
   unalias z 2> /dev/null
   _fzf_z="_z"
   (( ${+functions[zshz]} )) && { _fzf_z="zshz"; compdef _zshz z; }
