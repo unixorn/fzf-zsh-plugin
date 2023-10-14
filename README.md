@@ -42,8 +42,8 @@ Note - while these scripts could all be ZSH functions instead of scripts in the 
 | `d-attach` | Uses `fzf` to select `docker` containers to start and attach to. | From the [fzf wiki](https://github.com/junegunn/fzf/wiki/examples) |
 | `d-image-rm` | Uses `fzf` to select `docker` images to remove. | From the [fzf wiki](https://github.com/junegunn/fzf/wiki/examples) |
 | `d-rm` | Uses `fzf` to select `docker` containers to remove. | From the [fzf wiki](https://github.com/junegunn/fzf/wiki/examples) |
-| `d-stop-container` | Stop a Docker container. | |
-| `falias` | Searches your ZSH aliases, then puts your selection on the mac clipboard (macOS only) | |
+| `d-stop-container` | Stop a Docker container. | ? |
+| `falias` | Searches your ZSH aliases, then puts your selection on the mac clipboard (macOS only) | ? |
 | `fif` | Uses `fzf` and `rg` to find a term in files | [Boost Your Command-Line Productivity With Fuzzy Finder](https://betterprogramming.pub/boost-your-command-line-productivity-with-fuzzy-finder-985aa162ba5d) |
 | `fzf-brew-cask-install` | Uses `fzf` to select programs to install (or show the home page) based on the output of `brew cask search` | [Boost Your Command-Line Productivity With Fuzzy Finder](https://betterprogramming.pub/boost-your-command-line-productivity-with-fuzzy-finder-985aa162ba5d) |
 | `fzf-brew-cask-uninstall` | Uses `fzf` to select `brew`-installed programs to delete (or show the home page) | [Boost Your Command-Line Productivity With Fuzzy Finder](https://betterprogramming.pub/boost-your-command-line-productivity-with-fuzzy-finder-985aa162ba5d) |
@@ -123,5 +123,5 @@ Ultimately, `lesspipe.sh` (if present) will still honor your own `lessfilter` if
 
 - [Fuzzy Git Checkout](https://polothy.github.io/post/2019-08-19-fzf-git-checkout/) - Mark Nielsen wrote a good blog post showing how to use [fzf](https://github.com/junegunn/fzf) for `git` checkouts.
 - [fzf-pass](https://github.com/smeagol74/zsh-fzf-pass) - ZSH plugin that uses [fzf](https://github.com/junegunn/fzf) and [pass](https://www.passwordstore.org/) for better password handling.
-- [fzf-tab](https://github.com/Aloxaf/fzf-tab) - Replace ZSH's default completion with [fzf](https://github.com/junegunn/fzf)
+- [fzf-tab](https://github.com/Aloxaf/fzf-tab) - Replace ZSH's default completion with [fzf](https://github.com/junegunn/fzf).
 - [So you've installed `fzf`. Now what?](https://andrew-quinn.me/fzf/) - Good blog post by Andrew Quinn with more tricks you can do with `fzf`.
