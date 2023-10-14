@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 ![Awesomebot](https://github.com/unixorn/fzf-zsh-plugin/actions/workflows/awesomebot.yml/badge.svg)
-![Superlinter](https://github.com/unixorn/fzf-zsh-plugin/actions/workflows/superlinter.yml/badge.svg)
+![MegaLinter](https://github.com/unixorn/fzf-zsh-plugin/actions/workflows/mega-linter.yml/badge.svg)
 [![Code Climate](https://codeclimate.com/github/unixorn/fzf-zsh-plugin/badges/gpa.svg)](https://codeclimate.com/github/unixorn/fzf-zsh-plugin)
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
