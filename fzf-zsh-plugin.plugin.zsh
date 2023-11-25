@@ -31,17 +31,32 @@ function _fzf_debugOut() {
   fi
 }
 
+function _fzf_installed() {
+  if $(which fzf) &> /dev/null; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+
 # Install fzf, and enable it for command line history searching and
 # file searching.
 
 # Determine where fzf is installed
 local fzf_conf
-if [[ -z "$FZF_PATH" ]]; then
-  FZF_PATH=~/.fzf
+if _fzf_installed; then
+  FZF_PATH=$(which fzf)
   fzf_conf=~/.fzf.zsh
-else
-  fzf_conf="$FZF_PATH/fzf.zsh"
+else 
+  if [[ -z "$FZF_PATH" ]]; then
+    FZF_PATH=~/.fzf
+    fzf_conf=~/.fzf.zsh
+  else
+    fzf_conf="$FZF_PATH/fzf.zsh"
+  fi
 fi
+
 unset xdg_path
 
 # Install fzf into ~ if it hasn't already been installed.
