@@ -9,18 +9,16 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 ## Table of Contents
 
-- [fzf-zsh-plugin](#fzf-zsh-plugin)
-  - [Table of Contents](#table-of-contents)
-  - [Contents](#contents)
-  - [Installing](#installing)
-    - [Zgenom](#zgenom)
-    - [Antigen](#antigen)
-    - [Oh-My-Zsh](#oh-my-zsh)
-    - [Without using a framework](#without-using-a-framework)
-    - [(optional) Install recommended tools](#optional-install-recommended-tools)
-  - [Customization](#customization)
-    - [A note on `lessfilter-fzf`](#a-note-on-lessfilter-fzf)
-  - [Other FZF resources](#other-fzf-resources)
+- [Contents](#contents)
+- [Installing](#installing)
+  - [Zgenom](#zgenom)
+  - [Antigen](#antigen)
+  - [Oh-My-Zsh](#oh-my-zsh)
+  - [Without using a framework](#without-using-a-framework)
+  - [(optional) Install recommended tools](#optional-install-recommended-tools)
+- [Customization](#customization)
+  - [A note on `lessfilter-fzf`](#a-note-on-lessfilter-fzf)
+- [Other FZF resources](#other-fzf-resources)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
