@@ -9,16 +9,18 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 ## Table of Contents
 
-- [Contents](#contents)
-- [Installing](#installing)
-  - [Zgenom](#zgenom)
-  - [Antigen](#antigen)
-  - [Oh-My-Zsh](#oh-my-zsh)
-  - [Without using a framework](#without-using-a-framework)
-  - [(optional) Install recommended tools](#optional-install-recommended-tools)
-- [Customization](#customization)
-  - [A note on `lessfilter-fzf`](#a-note-on-lessfilter-fzf)
-- [Other FZF resources](#other-fzf-resources)
+- [fzf-zsh-plugin](#fzf-zsh-plugin)
+  - [Table of Contents](#table-of-contents)
+  - [Contents](#contents)
+  - [Installing](#installing)
+    - [Zgenom](#zgenom)
+    - [Antigen](#antigen)
+    - [Oh-My-Zsh](#oh-my-zsh)
+    - [Without using a framework](#without-using-a-framework)
+    - [(optional) Install recommended tools](#optional-install-recommended-tools)
+  - [Customization](#customization)
+    - [A note on `lessfilter-fzf`](#a-note-on-lessfilter-fzf)
+  - [Other FZF resources](#other-fzf-resources)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -105,9 +107,10 @@ You can customize a few features by exporting the following environment variable
 
 | Export variable                    | Description                                                                                                                                                                                                                                                                                  |
 | ---------------------------------- |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `export FZF_PREVIEW_ADVANCED=true` | Use `less` viewer with a pre-processor to display improved previews for a wide range of files (requires you to install at least `exa`, `bat`, `chafa`, `exiftool`; and very recommended `lesspipe.sh` and the tools it uses underneath: `mdcat`, `in2csv`,...). _This is an opt-in feature._ |
-| `export FZF_PREVIEW_WINDOW=''`     | Set any value supported by `fzf --preview-window` option, e.g. `right:65%:nohidden` will show the preview by default.                                                                                                                                                                        |
-| `export FZF_PATH=''`               | Path to install fzf binary and script, e.g. `${HOME}/.config/fzf`.                                                                            |
+| `FZF_PREVIEW_ADVANCED` | Use `less` viewer with a pre-processor to display improved previews for a wide range of files (requires you to install at least `exa`, `bat`, `chafa`, `exiftool`; and very recommended `lesspipe.sh` and the tools it uses underneath: `mdcat`, `in2csv`,...). _This is an opt-in feature._ |
+| `FZF_PREVIEW_WINDOW`     | Set any value supported by `fzf --preview-window` option, e.g. `right:65%:nohidden` will show the preview by default.                                                                                                                                                                        |
+| `FZF_PATH`               | Path to install fzf binary and script, e.g. `${HOME}/.config/fzf`.                                                                            |
+| `FZF_COLOR_SCHEME`       | Color scheme for fzf, e.g. `--color='hl:148,hl+:154,pointer:032,marker:010,bg+:237,gutter:008'`                                                                            |
 
 ### A note on `lessfilter-fzf`
 

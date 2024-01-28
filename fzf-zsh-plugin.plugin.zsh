@@ -106,6 +106,7 @@ _fzf_preview() {
 }
 
 # Don't step on user's defined variables. Export to potentially leverage them by other scripts.
+[[ -z "$FZF_COLOR_SCHEME" ]]   && export FZF_COLOR_SCHEME="--color='hl:148,hl+:154,pointer:032,marker:010,bg+:237,gutter:008'"
 [[ -z "$FZF_PREVIEW" ]]        && export FZF_PREVIEW="$(_fzf_preview)"
 [[ -z "$FZF_PREVIEW_WINDOW" ]] && export FZF_PREVIEW_WINDOW=':hidden'
 if [[ -z "$FZF_DEFAULT_OPTS" ]]; then
@@ -116,7 +117,7 @@ if [[ -z "$FZF_DEFAULT_OPTS" ]]; then
     "--multi"
     "--preview='${FZF_PREVIEW}'"
     "--preview-window='${FZF_PREVIEW_WINDOW}'"
-    "--color='hl:148,hl+:154,pointer:032,marker:010,bg+:237,gutter:008'"
+    "$FZF_COLOR_SCHEME"
     "--prompt='∼ '"
     "--pointer='▶'"
     "--marker='✓'"
