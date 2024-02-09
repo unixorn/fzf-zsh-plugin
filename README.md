@@ -92,7 +92,7 @@ The scripts in this collection don't actually require you to be using ZSH as you
 ### (optional) Install recommended tools
 
 Optionally, to make the most out of `fzf` preview (`?` toggle), install the following tools and enable the advanced preview (see [Customization](#customization) section):
-- `exa` - improved file/directory listing,
+- `eza` - improved file/directory listing,
 - `bat` - a `cat` clone with syntax highlighting and Git integration,
 - `chafa` - show images (the image can look better or worse depending on the terminal app you use),
 - `exiftool` - also show image metadata,
@@ -105,7 +105,7 @@ You can customize a few features by exporting the following environment variable
 
 | Export variable                    | Description                                                                                                                                                                                                                                                                                  |
 | ---------------------------------- |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `FZF_PREVIEW_ADVANCED` | Use `less` viewer with a pre-processor to display improved previews for a wide range of files (requires you to install at least `exa`, `bat`, `chafa`, `exiftool`; and very recommended `lesspipe.sh` and the tools it uses underneath: `mdcat`, `in2csv`,...). _This is an opt-in feature._ |
+| `FZF_PREVIEW_ADVANCED` | Use `less` viewer with a pre-processor to display improved previews for a wide range of files (requires you to install at least `eza`, `bat`, `chafa`, `exiftool`; and very recommended `lesspipe.sh` and the tools it uses underneath: `mdcat`, `in2csv`,...). _This is an opt-in feature._ |
 | `FZF_PREVIEW_WINDOW`     | Set any value supported by `fzf --preview-window` option, e.g. `right:65%:nohidden` will show the preview by default.                                                                                                                                                                        |
 | `FZF_PATH`               | Path to install fzf binary and script, e.g. `${HOME}/.config/fzf`.                                                                            |
 | `FZF_COLOR_SCHEME`       | Color scheme for fzf, e.g. `--color='hl:148,hl+:154,pointer:032,marker:010,bg+:237,gutter:008'`                                                                            |

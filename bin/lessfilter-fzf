@@ -15,7 +15,7 @@
 #   lessfilter-fzf > lesspipe.sh > lessfilter
 #
 # Required tools:
-#   - exa
+#   - eza
 #   - bat
 #   - chafa, exiftool
 #   - lesspipe.sh (recommended)
@@ -34,13 +34,13 @@ category=${mime%%/*}
 # shellcheck disable=SC2034 # left for completion
 kind=${mime##*/}
 
-if [ -d "$1" ] && has_cmd exa; then
-  exa --git --header --long --color=always --icons "$1"
+if [ -d "$1" ] && has_cmd eza; then
+  eza --git --header --long --color=always --icons "$1"
 elif [ "$category" = image ] && has_cmd chafa && has_cmd exiftool; then
   chafa "$1"
   exiftool "$1"
 elif has_cmd lesspipe.sh; then
-  # At the time of writing, `lesspipe.sh` does not use `exa` and `chafa`, it just uses `ls` and `exiftool`. It
+  # At the time of writing, `lesspipe.sh` does not use `eza` and `chafa`, it just uses `ls` and `exiftool`. It
   # will ultimately rely on `less` as a sane fallback.
   lesspipe.sh "$1" 2>/dev/null
 elif [ "$category" = text ] && has_cmd bat; then  # <-- give priority to lesspipe.sh if available
