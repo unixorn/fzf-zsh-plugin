@@ -1,4 +1,4 @@
-# Copyright 2020-2023 Joseph Block <jpb@unixorn.net>
+# Copyright 2020-2024 Joseph Block <jpb@unixorn.net>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,9 @@
 
 # Add our plugin's bin directory to the user's path
 local FZF_PLUGIN_BIN="$(dirname $0)/bin"
-path+=(${FZF_PLUGIN_BIN})
+if [[ ! "$path" == *${FZF_PLUGIN_BIN}* ]]; then
+  path+=(${FZF_PLUGIN_BIN})
+fi
 unset FZF_PLUGIN_BIN
 
 local FZF_COMPLETIONS_D="$(dirname $0)/completions"
