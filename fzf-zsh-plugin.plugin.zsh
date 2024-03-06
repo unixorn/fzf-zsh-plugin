@@ -47,7 +47,8 @@ fi
 unset xdg_path
 
 # Install fzf into ~ if it hasn't already been installed.
-if [[ ! _fzf_has fzf ]]; then
+_fzf_debugOut "FZF_PATH: $FZF_PATH"
+if ! _fzf_has fzf; then
   if [[ ! -d $FZF_PATH ]]; then
     git clone --depth 1 https://github.com/junegunn/fzf.git $FZF_PATH
     $FZF_PATH/install --bin
@@ -56,6 +57,7 @@ fi
 
 # Install some default settings if user doesn't already have fzf
 # settings configured.
+_fzf_debugOut "fzf_conf: $fzf_conf"
 if [[ ! -f $fzf_conf ]]; then
   echo "Can't find a fzf configuration file at $fzf_conf, creating a default one"
   cp "$(dirname $0)/fzf-settings.zsh" $fzf_conf
@@ -69,7 +71,7 @@ unset fzf_conf
 # Reasonable defaults. Exclude .git directory and the node_modules cesspit.
 # Don't step on user's FZF_DEFAULT_COMMAND
 if [[ -z "$FZF_DEFAULT_COMMAND" ]]; then
-  export FZF_DEFAULT_COMMAND='find . -type f ( -path .git -o -path node_modules ) -prune'
+  export FZF_DEFAULT_COMMAND='find . -type f -not \( -path "*/.git/*" -o -path "./node_modules/*" \)'
   export FZF_ALT_C_COMMAND='find . -type d ( -path .git -o -path node_modules ) -prune'
 
   if _fzf_has rg; then
