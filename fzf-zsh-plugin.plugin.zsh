@@ -102,7 +102,16 @@ fi
 #   - An advanced preview using a `less` preprocessor, capable of showing a wide range of formats, incl. images, dirs,
 #     CSVs, and other binary files (depending on available tooling).
 _fzf_preview() {
-  foolproofPreview='([[ -f {} ]] && (bat --style=numbers --color=always {} || cat {})) || ([[ -d {} ]] && (tree -C {} | less)) || echo {} 2>/dev/null | head -n 200'
+  _fzf_preview_pager='cat'
+  foolproofPreview='cat {}'
+  if _fzf_has bat; then
+    _fzf_preview_pager='bat'
+    foolproofPreview='([[ -f {} ]] && (bat --style=numbers --color=always {} || cat {})) || ([[ -d {} ]] && (tree -C {} | less)) || echo {} 2>/dev/null | head -n 200'
+  fi
+  if _fzf_has batcat; then
+    _fzf_preview_pager='batcat'
+    foolproofPreview='([[ -f {} ]] && (batcat --style=numbers --color=always {} || cat {})) || ([[ -d {} ]] && (tree -C {} | less)) || echo {} 2>/dev/null | head -n 200'
+  fi
   local preview
   [[ "$FZF_PREVIEW_ADVANCED" == true ]] \
     && preview="lessfilter-fzf {}" \
