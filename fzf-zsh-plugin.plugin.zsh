@@ -47,7 +47,6 @@ fi
 unset xdg_path
 
 # Install fzf into ~ if it hasn't already been installed.
-_fzf_debugOut "FZF_PATH: $FZF_PATH"
 if ! _fzf_has fzf; then
   if [[ ! -d $FZF_PATH ]]; then
     git clone --depth 1 https://github.com/junegunn/fzf.git $FZF_PATH
