@@ -20,8 +20,8 @@ if ! has brew; then
   fail "Can't find brew in your PATH"
 fi
 
-# Uninstall or open the webpage for the selected application 
-# using brew list as input source (all brew cask installed applications) 
+# Uninstall or open the webpage for the selected application
+# using brew list as input source (all brew cask installed applications)
 # and display a info quickview window for the currently marked application
 fzf-brew-cask-uninstall() {
     local token
@@ -30,12 +30,12 @@ fzf-brew-cask-uninstall() {
     if [ "x$token" != "x" ]
     then
         echo "(U)ninstall or open the (h)omepage of $token"
-        read input
-        if [ $input = "u" ] || [ $input = "U" ]; then
-            brew cask uninstall $token
+        read -r input
+        if [ "$input" = "u" ] || [ "$input" = "U" ]; then
+            brew cask uninstall "$token"
         fi
-        if [ $input = "h" ] || [ $token = "h" ]; then
-            brew cask home $token
+        if [ "$input" = "h" ] || [ "$token" = "h" ]; then
+            brew cask home "$token"
         fi
     fi
 }
