@@ -20,7 +20,7 @@ if ! has brew; then
   fail "Can't find brew in your PATH"
 fi
 
-# Install or open the webpage for the selected application 
+# Install or open the webpage for the selected application
 # using brew cask search as input source
 # and display a info quickview window for the currently marked application
 fzf-brew-cask-install() {
@@ -29,12 +29,12 @@ fzf-brew-cask-install() {
     if [ "x$token" != "x" ]
     then
         echo "(I)nstall or open the (h)omepage of $token"
-        read input
-        if [ $input = "i" ] || [ $input = "I" ]; then
-            brew cask install $token
+        read -r input
+        if [ "$input" = "i" ] || [ "$input" = "I" ]; then
+            brew cask install "$token"
         fi
-        if [ $input = "h" ] || [ $input = "H" ]; then
-            brew cask home $token
+        if [ "$input" = "h" ] || [ "$input" = "H" ]; then
+            brew cask home "$token"
         fi
     fi
 }
