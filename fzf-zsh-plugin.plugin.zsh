@@ -20,7 +20,9 @@ fi
 unset FZF_PLUGIN_BIN
 
 local FZF_COMPLETIONS_D="$(dirname $0)/completions"
-export fpath=($FZF_COMPLETIONS_D "${fpath[@]}" )
+if [[ -d "$FZF_COMPLETIONS_D" ]]; then
+  export fpath=($FZF_COMPLETIONS_D "${fpath[@]}" )
+fi
 unset FZF_COMPLETIONS_D
 
 function _fzf_has() {
