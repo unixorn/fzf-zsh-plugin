@@ -13,7 +13,7 @@
 # limitations under the License.
 
 # Add our plugin's bin directory to the user's path
-local FZF_PLUGIN_BIN="$(dirname $0)/bin"
+local FZF_PLUGIN_BIN="${0:h}/bin"
 if [[ ! "$path" == *${FZF_PLUGIN_BIN}* ]]; then
   path+=(${FZF_PLUGIN_BIN})
 fi
