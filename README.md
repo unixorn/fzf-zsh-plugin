@@ -122,7 +122,8 @@ Ultimately, `lesspipe.sh` (if present) will still honor your own `lessfilter` if
 
 ## Other FZF resources
 
+- [A Practical Guide to fzf: Building a File Explorer](https://thevaluable.dev/practical-guide-fzf-example/) - Part one in a series of articles about `fzf`.
 - [Fuzzy Git Checkout](https://polothy.github.io/post/2019-08-19-fzf-git-checkout/) - Mark Nielsen wrote a good blog post showing how to use [fzf](https://github.com/junegunn/fzf) for `git` checkouts.
+- [So you've installed `fzf`. Now what?](https://andrew-quinn.me/fzf/) - Good blog post by Andrew Quinn with more tricks you can do with `fzf`.
 - [fzf-pass](https://github.com/smeagol74/zsh-fzf-pass) - ZSH plugin that uses [fzf](https://github.com/junegunn/fzf) and [pass](https://www.passwordstore.org/) for better password handling.
 - [fzf-tab](https://github.com/Aloxaf/fzf-tab) - Replace ZSH's default completion with [fzf](https://github.com/junegunn/fzf).
-- [So you've installed `fzf`. Now what?](https://andrew-quinn.me/fzf/) - Good blog post by Andrew Quinn with more tricks you can do with `fzf`.
