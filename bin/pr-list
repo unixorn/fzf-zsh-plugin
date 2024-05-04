@@ -25,8 +25,16 @@ function has() {
   which "$@" > /dev/null 2>&1
 }
 
-if has gh; then
-  gh api --paginate 'repos/:owner/:repo/pulls?state=open' | jq -r '.[] | [.number, .user.login, .title] | @tsv' | fzf
-else
+if ! has gh; then
   fail "Cannot find 'gh' in your PATH"
 fi
+
+if ! has jq; then
+  fail "Cannot find 'jq' in your PATH"
+fi
+
+if ! has fzf; then
+  fail "Cannot find 'fzf' in your PATH"
+fi
+
+gh api --paginate 'repos/:owner/:repo/pulls?state=open' | jq -r '.[] | [.number, .user.login, .title] | @tsv' | fzf
