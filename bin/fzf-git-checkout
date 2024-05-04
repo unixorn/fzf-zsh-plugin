@@ -34,7 +34,7 @@ if ! has git; then
 fi
 
 fzf-git-checkout() {
-    git rev-parse HEAD > /dev/null 2>&1 || return
+    in_git_repo || return
 
     local branch
 
