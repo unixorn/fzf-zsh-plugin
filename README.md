@@ -95,7 +95,7 @@ The scripts in this collection don't actually require you to be using ZSH as you
 Optionally, to make the most out of `fzf` preview (`?` toggle), install the following tools and enable the advanced preview (see [Customization](#customization) section):
 - `eza` - improved file/directory listing,
 - `bat` - a `cat` clone with syntax highlighting and Git integration,
-- `chafa` - show images (the image can look better or worse depending on the terminal app you use),
+- `chafa` - show images (the image quality depends on the terminal emulator you use),
 - `exiftool` - also show image metadata,
 - `lesspipe.sh`, e.g. `brew install lesspipe` - and other optional tools `lesspipe.sh` relies on. See <https://github.com/wofr06/lesspipe>
   ☝ **Note**: This is not the `lesspipe` already bundled in Ubuntu/Debian but an improved one (while package is called `lesspipe`, the binary is `lesspipe.sh`).
