@@ -30,7 +30,7 @@ function _fzf_has() {
 }
 
 function _fzf_debugOut() {
-  if [[ -n "$DEBUG" ]]; then
+  if [[ -n "$DEBUG" || -f "$HOME/.fzf-plugin-debug" ]]; then
     echo "$@"
   fi
 }
@@ -43,13 +43,18 @@ local fzf_conf
 if [[ -z "$FZF_PATH" ]]; then
   FZF_PATH=~/.fzf
   fzf_conf=~/.fzf.zsh
+  _fzf_debugOut "FZF_PATH and fzf_conf unset, using defaults in ~"
 else
-  fzf_conf="$FZF_PATH/fzf.zsh"
+  if [[ -z "$fzf_conf" ]]; then
+    fzf_conf="$FZF_PATH/fzf.zsh"
+  fi
+  _fzf_debugOut "fzf_conf: $fzf_conf"
 fi
-unset xdg_path
+# unset xdg_path
 
 # Install fzf into ~ if it hasn't already been installed.
 if ! _fzf_has fzf; then
+  _fzf_debugOut "Can't find fzf in path, installing"
   if [[ ! -d $FZF_PATH ]]; then
     git clone --depth 1 https://github.com/junegunn/fzf.git $FZF_PATH
     $FZF_PATH/install --bin
@@ -200,6 +205,16 @@ if _fzf_has pbcopy; then
     }
   fi
 fi
+
+_fzf_debugOut "FZF_ALT_C_COMMAND: $FZF_ALT_C_COMMAND"
+_fzf_debugOut "FZF_COLOR_SCHEME: $FZF_COLOR_SCHEME"
+_fzf_debugOut "FZF_CTRL_T_COMMAND: $FZF_CTRL_T_COMMAND"
+_fzf_debugOut "FZF_DEFAULT_COMMAND: $FZF_DEFAULT_COMMAND"
+_fzf_debugOut "FZF_DEFAULT_OPTS: $FZF_DEFAULT_OPTS"
+_fzf_debugOut "FZF_PATH: $FZF_PATH"
+_fzf_debugOut "FZF_PREVIEW: $FZF_PREVIEW"
+_fzf_debugOut "FZF_PREVIEW_ADVANCED: $FZF_PREVIEW_ADVANCED"
+_fzf_debugOut "FZF_PREVIEW_WINDOW: $FZF_PREVIEW_WINDOW"
 
 # Cleanup internal functions
 unset -f _fzf_debugOut
