@@ -49,7 +49,7 @@ jobs:
       # Run Linter against code base #
       ################################
       - name: Lint Code Base
-        uses: megalinter/megalinter@v7
+        uses: megalinter/megalinter@v8
         env:
           ACTION_ACTIONLINT_DISABLE_ERRORS: true
           DEFAULT_BRANCH: main
