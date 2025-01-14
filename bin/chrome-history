@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# browse Chrome history, then open 
+# browse Chrome history, then open
 
 set -o pipefail
 if [[ -n "$DEBUG" ]]; then
@@ -26,8 +26,8 @@ function has() {
 function cleanup() {
   if [[ -d "$SCRATCH_D" ]]; then
     rm -fr "$SCRATCH_D"
-  fi  
-}  
+  fi
+}
 
 # Set up a working scratch directory
 SCRATCH_D=$(mktemp -d)
@@ -35,7 +35,7 @@ SCRATCH_D=$(mktemp -d)
 if [[ ! "$SCRATCH_D" || ! -d "$SCRATCH_D" ]]; then
   echo "Could not create temp dir"
   exit 1
-fi  
+fi
 
 trap cleanup EXIT
 

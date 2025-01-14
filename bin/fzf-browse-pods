@@ -58,6 +58,7 @@ function usage() {
   echo "Use fzf to browse running k8s pods"
 }
 
+# shellcheck disable=SC2120,SC2016
 pods() {
   : | command='kubectl get pods --all-namespaces' fzf \
     --info=inline --layout=reverse --header-lines=1 \
@@ -73,4 +74,5 @@ pods() {
 }
 
 check-dependencies
+# shellcheck disable=SC2119
 pods
