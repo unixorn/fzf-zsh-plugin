@@ -128,3 +128,11 @@ Ultimately, `lesspipe.sh` (if present) will still honor your own `lessfilter` if
 - [So you've installed `fzf`. Now what?](https://andrew-quinn.me/fzf/) - Good blog post by Andrew Quinn with more tricks you can do with `fzf`.
 - [fzf-pass](https://github.com/smeagol74/zsh-fzf-pass) - ZSH plugin that uses [fzf](https://github.com/junegunn/fzf) and [pass](https://www.passwordstore.org/) for better password handling.
 - [fzf-tab](https://github.com/Aloxaf/fzf-tab) - Replace ZSH's default completion with [fzf](https://github.com/junegunn/fzf).
+
+## Contributors
+
+<a href="https://github.com/unixorn/fzf-zsh-plugin/graphs/contributors">
+  <img src="https://contributors-img.web.app/image?repo=unixorn/fzf-zsh-plugin" />
+</a>
+
+Made with [contributors-img](https://contributors-img.web.app).
