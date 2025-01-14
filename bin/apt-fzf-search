@@ -32,7 +32,7 @@ if has apt-cache; then
   fzf --multi --cycle --reverse --preview 'apt-cache show {1}' | \
   xargs -r sudo apt install -y
 else
-  fail "Cannot find apt in $PATH. 
-  
+  fail "Cannot find apt in $PATH.
+
 Are you sure you're on a Debian or Ubuntu system?"
 fi

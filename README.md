@@ -19,6 +19,7 @@
 - [Customization](#customization)
   - [A note on `lessfilter-fzf`](#a-note-on-lessfilter-fzf)
 - [Other FZF resources](#other-fzf-resources)
+- [Contributors](#contributors)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
