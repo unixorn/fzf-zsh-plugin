@@ -16,8 +16,8 @@ function debug() {
 }
 
 function fail() {
-  printf '%s\n' "$1" >&2  ## Send message to stderr. Exclude >&2 if you don't want it that way.
-  exit "${2-1}"  ## Return a code specified by $2 or 1 by default.
+  printf '%s\n' "$1" >&2 ## Send message to stderr. Exclude >&2 if you don't want it that way.
+  exit "${2-1}"          ## Return a code specified by $2 or 1 by default.
 }
 
 function has() {
@@ -27,7 +27,11 @@ function has() {
 
 # Select a docker image or images to remove
 function drmi() {
-  docker images | sed 1d | fzf -q "$1" --no-sort -m --tac | awk '{ print $3 }' | xargs -r docker rmi
+  # if the image has no tag, use the image id, otherwise use the image name and
+  # tag; allows removing a tag from an image with multiple tags
+  docker images | sed 1d | fzf -q "$1" --no-sort -m --tac |
+    awk '{ print ($2=="<none>")?$3:$1 ":" $2 }' |
+    xargs -r docker rmi
 }
 
 if has docker; then
