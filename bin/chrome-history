@@ -41,7 +41,7 @@ trap cleanup EXIT
 
 # browse Chrome history
 chrome-history() {
-  local cols sep chrome_history open
+  local cols sep
   cols=$(( COLUMNS / 3 ))
   sep='{::}'
 
