@@ -31,5 +31,3 @@ fi
 if [[ -f "${FZF_PATH}/shell/key-bindings.zsh" ]]; then
   source "${FZF_PATH}/shell/key-bindings.zsh"
 fi
-
-unset -f _fzf_has
