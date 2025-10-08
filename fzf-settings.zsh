@@ -4,11 +4,7 @@ if [[ ! "$PATH" == *${FZF_PATH}/bin* ]]; then
   export PATH="$PATH:${FZF_PATH}/bin"
 fi
 
-function _fzf_has() {
-  which "$@" > /dev/null 2>&1
-}
-
-if _fzf_has brew; then
+if  (( $+commands[brew] )); then
   # If fzf was installed via brew, use the brew paths
   if [[ -x "$(brew --prefix)/bin/fzf" ]]; then
     if [[ -f "$(brew --prefix fzf)/shell/completion.zsh" ]]; then
