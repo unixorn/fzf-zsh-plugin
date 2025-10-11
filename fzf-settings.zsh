@@ -4,7 +4,11 @@ if [[ ! "$PATH" == *${FZF_PATH}/bin* ]]; then
   export PATH="$PATH:${FZF_PATH}/bin"
 fi
 
-if  (( $+commands[brew] )); then
+function _fzf_settings_has() {
+  which "$@" > /dev/null 2>&1
+}
+
+if _fzf_settings_has brew; then
   # If fzf was installed via brew, use the brew paths
   if [[ -x "$(brew --prefix)/bin/fzf" ]]; then
     if [[ -f "$(brew --prefix fzf)/shell/completion.zsh" ]]; then
@@ -27,3 +31,6 @@ fi
 if [[ -f "${FZF_PATH}/shell/key-bindings.zsh" ]]; then
   source "${FZF_PATH}/shell/key-bindings.zsh"
 fi
+
+# Cleanup internal functions
+unset -f _fzf_settings_has
