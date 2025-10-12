@@ -25,6 +25,10 @@ if [[ -d "$FZF_COMPLETIONS_D" ]]; then
 fi
 unset FZF_COMPLETIONS_D
 
+function _fzf_has() {
+  which "$@" > /dev/null 2>&1
+}
+
 function _fzf_debugOut() {
   if [[ -n "$DEBUG" ]]; then
     echo "$@"
@@ -45,7 +49,7 @@ fi
 unset xdg_path
 
 # Install fzf into ~ if it hasn't already been installed.
-if ! (( $+commands[fzf] )); then
+if ! _fzf_has fzf; then
   if [[ ! -d $FZF_PATH ]]; then
     git clone --depth 1 https://github.com/junegunn/fzf.git $FZF_PATH
     $FZF_PATH/install --bin
@@ -71,14 +75,14 @@ if [[ -z "$FZF_DEFAULT_COMMAND" ]]; then
   export FZF_DEFAULT_COMMAND='find . -type f -not \( -path "*/.git/*" -o -path "./node_modules/*" \)'
   export FZF_ALT_C_COMMAND='find . -type d ( -path .git -o -path node_modules ) -prune'
 
-  if (( $+commands[rg] )); then
+  if _fzf_has rg; then
     # rg is faster than find, so use it instead.
     export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!{.git,node_modules}/**"'
   fi
 
   # If fd command is installed, use it instead of find
-   (( $+commands[fd] )) && _fd_cmd="fd"
-   (( $+commands[fdfind] ))  && _fd_cmd="fdfind"
+  _fzf_has 'fd' && _fd_cmd="fd"
+  _fzf_has 'fdfind' && _fd_cmd="fdfind"
   if [[ -n "$_fd_cmd" ]]; then
     # Show hidden, and exclude .git and the pigsty node_modules files
     export FZF_DEFAULT_COMMAND="$_fd_cmd --hidden --follow --exclude '.git' --exclude 'node_modules'"
@@ -102,11 +106,11 @@ fi
 _fzf_preview() {
   _fzf_preview_pager='cat'
   foolproofPreview='cat {}'
-  if (( $+commands[bat] )); then
+  if _fzf_has bat; then
     _fzf_preview_pager='bat'
     foolproofPreview='([[ -f {} ]] && (bat --style=numbers --color=always {} || cat {})) || ([[ -d {} ]] && (tree -C {} | less)) || echo {} 2>/dev/null | head -n 200'
   fi
-  if (( $+commands[batcat] )); then
+  if _fzf_has batcat; then
     _fzf_preview_pager='batcat'
     foolproofPreview='([[ -f {} ]] && (batcat --style=numbers --color=always {} || cat {})) || ([[ -d {} ]] && (tree -C {} | less)) || echo {} 2>/dev/null | head -n 200'
   fi
@@ -138,14 +142,14 @@ if [[ -z "$FZF_DEFAULT_OPTS" ]]; then
     "--bind 'ctrl-e:execute(vim {+} >/dev/tty)'"
     "--bind 'ctrl-v:execute(code {+})'"
   )
-  if (( $+commands[pbcopy] )); then
+  if _fzf_has pbcopy; then
     # On macOS, make ^Y yank the selection to the system clipboard. On Linux you can alias pbcopy to `xclip -selection clipboard` or corresponding tool.
     fzf_default_opts+=("--bind 'ctrl-y:execute-silent(echo {+} | pbcopy)'")
   fi
   export FZF_DEFAULT_OPTS=$(printf '%s\n' "${fzf_default_opts[@]}")
 fi
 
-if (( $+commands[tree] )); then
+if _fzf_has tree; then
   function fzf-change-directory() {
     local directory=$(
       fd --type d | \
@@ -165,7 +169,7 @@ if [[ -d $FZF_PATH/man ]]; then
     manpath+=(":$FZF_PATH/man")
 fi
 
-if (( $+commands[z] )) && !  (( $+commands[zoxide] )); then
+if _fzf_has z && ! _fzf_has zoxide; then
   unalias z 2> /dev/null
   _fzf_z="_z"
   (( ${+functions[zshz]} )) && { _fzf_z="zshz"; compdef _zshz z; }
@@ -186,8 +190,8 @@ function cdf() {
   file=$(fzf +m -q "$1") && dir=$(dirname "$file") && cd "$dir"
 }
 
-if (( $+commands[pbcopy] )); then
-  if (( $+commands[ghead] )); then
+if _fzf_has pbcopy; then
+  if _fzf_has ghead; then
     function falias {
         # Search alias by key or values
         local out
@@ -199,4 +203,5 @@ fi
 
 # Cleanup internal functions
 unset -f _fzf_debugOut
+unset -f _fzf_has
 unset -f _fzf_preview
