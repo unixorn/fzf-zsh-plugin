@@ -39,7 +39,7 @@ jobs:
       # Checkout the code base #
       ##########################
       - name: Checkout Code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           # Full git history is needed to get a proper list of changed files
           # within `mega-linter`
@@ -66,7 +66,7 @@ jobs:
       # They will be available on Github action page "Artifacts" section
       - name: Archive production artifacts
         if: ${{ success() }} || ${{ failure() }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: Mega-Linter reports
           path: |
